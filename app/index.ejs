@@ -30,6 +30,18 @@
           </button>
           <a class="navbar-brand" ui-sref="home">Wiren Board Web UI</a>
 
+          <div class=" help-navbar">
+            <div class="dropdown  navbar-right navbar-text">
+              <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                <span class="glyphicon glyphicon-question-sign"></span> Справка <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu">
+                <li><a href="http://contactless.ru/wiki/index.php/%D0%92%D0%B5%D0%B1-%D0%B8%D0%BD%D1%82%D0%B5%D1%80%D1%84%D0%B5%D0%B9%D1%81_Wiren_Board">Документация</a></li>
+                <li><a href="http://forums.contactless.ru">Наш форум</a></li>
+
+              </ul>
+            </div>
+          </div>
 
           <p class="navbar-text navbar-right connection-status">
 			    <span  class="" ng-class="(isConnected()) ? '' : 'label label-danger'" ng-bind="isConnected() ? 'Connected' : 'Disconnected'"></span>
