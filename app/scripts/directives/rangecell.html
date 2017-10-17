@@ -1,8 +1,12 @@
-<span class="cell cell-range">
-  <input ng-readonly="cell.readOnly" type="range" ng-model="target.value"
-         ng-model-options="{ updateOn: 'default blur', debounce: {'default': 100, 'blur': 0} }">
+<div class="cell cell-range">
+ <!-- <input ng-readonly="cell.readOnly" type="range" ng-model="target.value"
+         ng-model-options="{ updateOn: 'default blur', debounce: {'default': 400, 'blur': 0} }">
+-->
+    <div range-slider min="min" max="max" step="step" model-max="_value" pin-handle="min"
+         disabled="cell.readOnly"
+         on-handle-up='handleUp()'></div>
   <span class="value-wrapper">
     <span class="value">{{ cell.value }}</span>
     <span ng-if="!!cell.units" class="units">{{ cell.units }}</span>
   </span>
-</span>
+</div>

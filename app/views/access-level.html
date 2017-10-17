@@ -1,0 +1,44 @@
+<h1 class="page-header">
+    Access level
+</h1>
+
+<div class="form-group">
+    <div class="radio">
+        <label>
+            <input type="radio" value="1" name="level"
+                   ng-model="$ctrl.level"
+                   ng-change="$ctrl.select($ctrl.one)"> {{$ctrl.one.name}}
+            <span ng-show="$ctrl.activeRole == 1" class="label label-info"> active</span>
+        </label>
+    </div>
+</div>
+<div class="form-group">
+    <div class="radio">
+        <label>
+            <input type="radio" value="2" name="level"
+                   ng-model="$ctrl.level"
+                   ng-change="$ctrl.select($ctrl.two)"> {{$ctrl.two.name}}
+            <span ng-show="$ctrl.activeRole == 2" class="label label-info"> active</span>
+        </label>
+    </div>
+</div>
+<div class="form-group">
+    <div class="radio">
+        <label>
+            <input type="radio" value="3" name="level"
+                   ng-model="$ctrl.level"
+                   ng-change="$ctrl.select($ctrl.three)"> {{$ctrl.three.name}}
+            <span ng-show="$ctrl.activeRole == 3" class="label label-info"> active</span>
+        </label>
+    </div>
+</div>
+<br><br>
+<div class="form-group alert alert-danger" ng-show="$ctrl.isLevelUp">
+    <div class="checkbox">
+        <label>
+            <input type="checkbox" ng-model="$ctrl.ok"> I take full responsibility for my actions
+        </label>
+    </div>
+</div>
+
+<button ng-click="$ctrl.apply()" ng-disabled="!$ctrl.ok && $ctrl.isLevelUp" class="btn btn-success">Apply</button>

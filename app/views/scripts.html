@@ -1,22 +1,75 @@
 <h1 class="page-header">
-  Scripts
+    Scripts
 </h1>
 
-<div class="spinner" ng-show="spinnerActive('editorProxy')" ng-cloak>
-  <span class="spinner-loader">Loading...</span>
-</div>
 
-<div class="scripts" ng-show="!spinnerActive('editorProxy')" ng-cloak>
-  <ul>
-    <li>
-      <a ui-sref="scriptNew" ui-sref-active="active">
-        New...
-      </a>
-    </li>
-    <li ng-repeat="script in scripts">
-      <a ui-sref="scriptEdit({ path: script.virtualPath })" ui-sref-active="active">
-        {{ script.virtualPath }}
-      </a>
-    </li>
-  </ul>
+<div class="alert alert-danger alert-dismissible" role="alert"
+     ng-hide="$ctrl.haveRights">
+    You cannot view this page. You can change <a ui-sref="accessLevel">access level</a>.
 </div>
+<section ng-if="$ctrl.haveRights">
+    <a ui-sref="scriptNew" ui-sref-active="active" class="btn btn-success">
+        New...
+    </a>
+    <div class="spinner-floating">
+        <div class="spinner" ng-show="spinnerActive('editorProxy')" ng-cloak>
+            <span class="spinner-loader">Loading...</span>
+        </div>
+    </div>
+    <br><br>
+    <div ng-cloak
+         ng-show="$ctrl.scripts.length"
+         ng-class="{'pointer-none':spinnerActive('editorProxy')}">
+        <div>
+
+            <div class="row" ng-repeat="script in $ctrl.scripts">
+                <div class="col-xs-4">
+                    <a ui-sref="scriptEdit({ path: script.virtualPath })"
+                       ng-hide="$ctrl.renamedScripts[$index]">
+                        {{ script.virtualPath }}
+                    </a>
+                    <input type="text" class="form-control" ng-model="script.tempName" ng-show="$ctrl.renamedScripts[$index]">
+                </div>
+
+                <div class="col-xs-8">
+                    <button class="icon-button" ng-click="$ctrl.deleteScript($index)" title="delete">
+                        <i class="glyphicon glyphicon-trash"></i>
+                    </button>
+                <span class="onoffswitch">
+                   <input type="checkbox" class="onoffswitch-checkbox" id="switch{{$index}}"
+                          ng-change="$ctrl.toggleScript($index)"
+                          ng-model="cell.value">
+                   <label class="onoffswitch-label" for="switch{{$index}}"
+                          ng-class="{'pointer-none text-muted':cell.readOnly==true}">
+                       <span class="onoffswitch-inner" data-swchon-text="ON" data-swchoff-text="OFF"></span>
+                       <span class="onoffswitch-switch"></span>
+                   </label>
+                </span>
+                    <button ng-click="$ctrl.restart($index)" title="restart" class="icon-button">
+                        <i class="glyphicon glyphicon-retweet"></i>
+                    </button>
+
+                    <button class="icon-button" ng-click="$ctrl.renameMode($index)"
+                            title="edit name"
+                            ng-hide="$ctrl.renamedScripts[$index]">
+                        <i class="glyphicon glyphicon-pencil"></i>
+                    </button>
+                    <button class="icon-button" ng-click="$ctrl.undoRename($index)"
+                            title="undo"
+                            ng-show="$ctrl.renamedScripts[$index]">
+                        <i class="glyphicon glyphicon-arrow-left"></i>
+                    </button>
+                    <button class="icon-button" ng-click="$ctrl.save($index)"
+                            title="save"
+                            ng-show="$ctrl.renamedScripts[$index]">
+                        <i class="glyphicon glyphicon-ok"></i>
+                    </button>
+                </div>
+                <hr>
+                <div class="clerfix"></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+

@@ -4,7 +4,7 @@
   "description": "A workflow for Angular made with Webpack",
   "scripts": {
     "clean": "rimraf dist coverage ./tmp",
-    "build": "webpack --bail --progress --profile",
+    "build": "rimraf dist && webpack --bail --progress --profile",
     "server": "webpack-dev-server --history-api-fallback --inline --progress",
     "test": "rimraf coverage && karma start karma_ci.conf.js",
     "test-watch": "karma start karma_dev.conf.js",
@@ -22,9 +22,11 @@
   },
   "homepage": "https://github.com/Foxandxss/angular-webpack-workflow",
   "dependencies": {
-    "angular": "<2",
+    "angular": "^1.6.3",
     "angular-elastic": "^2.5.1",
     "angular-mocks": "^1.6.3",
+    "angular-plotly": "^0.1.3",
+    "angular-rangeslider": "0.0.14",
     "angular-resource": "^1.6.3",
     "angular-sanitize": "^1.6.3",
     "angular-sortable-view": "0.0.15",

@@ -11,18 +11,24 @@
           onbeforesave="ctrl.checkNonEmpty($data, 'Empty widget name is not allowed')"
           class="widget-name">{{ ctrl.source.name }}</span>
     <span ng-show="!widgetForm.$visible"
+          user-role="mto" current-role="ctrl.roles.current.role"
           ng-click="widgetForm.$show()"
           title="Edit widget"
           class="widget-button widget-button-edit"><i class="glyphicon glyphicon-edit white widget-caption-button"></i></span>
     <span ng-if="ctrl.canDelete()"
+          user-role="mto" current-role="ctrl.roles.current.role"
           ng-click="ctrl.onDelete()"
           title="Delete widget"
           class="widget-button widget-button-delete"><i class="glyphicon glyphicon-trash white widget-caption-button"></i></span>
     <span ng-if="ctrl.canRemove()"
+          user-role="mto" current-role="ctrl.roles.current.role"
           ng-click="ctrl.onRemove()"
           title="Remove from this dashboard"
           class="widget-button widget-button-remove"><i class="glyphicon glyphicon-remove white widget-caption-button"></i></span>
-    <span class="widget-button widget-handle" ng-if="ctrl.canRemove()" sv-handle><i class="glyphicon glyphicon-sort white widget-caption-button"></i></span>
+    <span class="widget-button widget-handle"
+          ng-if="ctrl.canRemove()"
+          user-role="mto" current-role="ctrl.roles.current.role"
+          sv-handle><i class="glyphicon glyphicon-sort white widget-caption-button"></i></span>
   </div>
   <div class="panel-body">
     <display-cell ng-if="!widgetForm.$visible"

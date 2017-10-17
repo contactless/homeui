@@ -1,30 +1,43 @@
 <h1 class="page-header">
-  Configuration Files
+    Configuration Files
 </h1>
 
-<div class="spinner" ng-show="spinnerActive('configEditorProxy')" ng-cloak>
-  <span class="spinner-loader">Loading...</span>
+<div class="alert alert-danger alert-dismissible" role="alert"
+     ng-hide="$ctrl.haveRights">
+    You cannot view this page. You can change <a ui-sref="accessLevel">access level</a>.
 </div>
+<section ng-if="$ctrl.haveRights">
+    <div class="spinner" ng-show="spinnerActive('configEditorProxy')" ng-cloak>
+        <span class="spinner-loader">Loading...</span>
+    </div>
 
-<div class="configs" ng-show="!spinnerActive('configEditorProxy')" ng-cloak>
-  <table class="table">
-    <thead>
-      <tr>
-        <th>File</th>
-        <th>Title</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr ng-repeat="config in configs">
-        <td>
-          <a ui-sref="configEdit({ path: config.schemaPath })" ui-sref-active="active">
-          {{ config.configPath }}
-          </a>
-        </td>
-        <td>{{ config.title }}</td>
-        <td>{{ config.description }}</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+    <div class="configs" ng-show="!spinnerActive('configEditorProxy')" ng-cloak>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>File</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Updated at</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="config in configs track by $index">
+                <td>{{ config.configPath }}</td>
+                <td>
+                    <a ui-sref="configEdit({path: config.schemaPath})">
+                        {{ config.title }}
+                    </a>
+                </td>
+                <td>
+                    <a ui-sref="configEdit({path: config.schemaPath})">
+                        {{ config.description }}
+                    </a>
+                </td>
+                <td>{{ config.updatedAt }}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+

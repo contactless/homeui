@@ -1,6 +1,6 @@
 import template from './widget.html';
 
-function widgetDirective(DeviceData, $timeout) {
+function widgetDirective(DeviceData, rolesFactory) {
   'ngInject';
 
 //-----------------------------------------------------------------------------
@@ -17,7 +17,7 @@ function widgetDirective(DeviceData, $timeout) {
   class WidgetController {
     constructor ($scope, $element, $attrs) {
       'ngInject';
-
+      this.roles = rolesFactory;
       this.cellType = "any";
       this.source = {};
       this.originalSource = {};

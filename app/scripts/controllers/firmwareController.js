@@ -16,12 +16,12 @@ class FirmwareCtrl {
       }
       $scope.stateType = type;
       $scope.stateMsg = msg;
-    }
+    };
 
     var showDoneButton = function(msg) {
       $scope.doneLabel = msg;
       $scope.done = true;
-    }
+    };
 
     var timeout = undefined;
 
@@ -35,11 +35,11 @@ class FirmwareCtrl {
         showState('danger', msg);
         showDoneButton('Dismiss');
       }, seconds * 1000);
-    }
+    };
 
     var setProgressTimeout = function() {
       setTimeout(60, 'Firmware update stalled, something gone wrong')
-    }
+    };
 
     mqttClient.addStickySubscription('/firmware/status', function(msg) {
       var p = msg.payload.indexOf(' ');
@@ -102,7 +102,7 @@ class FirmwareCtrl {
           showDoneButton();
         });
       }
-    }
+    };
 
     $scope.doneClick = function() {
       $scope.done = $scope.running = $scope.uploading = false;

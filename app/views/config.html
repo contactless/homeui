@@ -1,13 +1,24 @@
-<h1 class="page-header">
-  <span>{{ file.configPath }}</span>
-</h1>
 
-<div class="spinner" ng-show="spinnerActive('configEditorProxy')" ng-cloak>
-  <span class="spinner-loader">Loading...</span>
+
+<div class="alert alert-danger alert-dismissible" role="alert"
+     ng-hide="$ctrl.haveRights">
+    You cannot view this page. You can change <a ui-sref="accessLevel">access level</a>.
 </div>
 
-<div class="config-editor" ng-if="file.schema && !spinnerActive('configEditorProxy')">
-  <button class="btn btn-primary" name="save" ng-click="save()" ng-disabled="!canSave()">Save</button>
-  <json-editor schema="file.schema" startval="file.content" options="editorOptions"
-               on-change="onChange"></json-editor>
-</div>
+<section ng-if="$ctrl.haveRights">
+    <h1 class="page-header">
+        <span>{{ file.configPath }}</span>
+    </h1>
+    <div class="spinner" ng-show="spinnerActive('configEditorProxy')" ng-cloak>
+        <span class="spinner-loader">Loading...</span>
+    </div>
+
+    <div class="config-editor" ng-if="file.schema && !spinnerActive('configEditorProxy')">
+        <button class="btn btn-primary" name="save" ng-click="save()" ng-disabled="!canSave()">Save</button>
+        <json-editor class="turn-off-group-button"
+                schema="file.schema"
+                startval="file.content"
+                options="editorOptions"
+                on-change="onChange"></json-editor>
+    </div>
+</section>

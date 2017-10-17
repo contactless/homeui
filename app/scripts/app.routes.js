@@ -15,6 +15,31 @@ function routing($stateProvider,  $locationProvider, $urlRouterProvider) {
       templateUrl: 'views/home.html',
       controller: 'HomeCtrl as $ctrl'
     })
+      .state('help', {
+          url: '/help',
+          templateUrl: 'views/help.html',
+          controller: 'HelpCtrl as $ctrl'
+      })
+      .state('webUI', {
+          url: '/web-ui',
+          templateUrl: 'views/web-ui.html',
+          controller: 'WebUICtrl as $ctrl'
+      })
+      .state('system', {
+          url: '/system',
+          templateUrl: 'views/system.html',
+          controller: 'SystemCtrl as $ctrl'
+      })
+      .state('MQTTChannels', {
+          url: '/MQTTChannels',
+          templateUrl: 'views/MQTTChannels.html',
+          controller: 'MQTTCtrl as $ctrl'
+      })
+      .state('accessLevel', {
+          url: '/access-level',
+          templateUrl: 'views/access-level.html',
+          controller: 'AccessLevelCtrl as $ctrl'
+      })
   //...........................................................................
     .state('devices', {
       url: '/devices',
@@ -154,7 +179,7 @@ function routing($stateProvider,  $locationProvider, $urlRouterProvider) {
   //...........................................................................
     .state('scripts', {
       url: '/scripts',
-      controller: 'ScriptsCtrl',
+      controller: 'ScriptsCtrl as $ctrl',
       templateUrl: 'views/scripts.html',
       resolve: {
         ctrl: ($q, $ocLazyLoad) => {
@@ -256,9 +281,8 @@ function routing($stateProvider,  $locationProvider, $urlRouterProvider) {
         ctrl: ($q, $ocLazyLoad) => {
           'ngInject';
           let deferred_1 = $q.defer();
-          let deferred_2 = $q.defer();
           require.ensure(
-            ['d3', 'c3/c3'], 
+            [],
             (require) => {
               let module_1 = require('./controllers/historyController.js');
               $ocLazyLoad.load({
@@ -268,19 +292,12 @@ function routing($stateProvider,  $locationProvider, $urlRouterProvider) {
                 deferred_1.resolve(module_1);
               });
 
-             let module_2 = require('../lib/angular-c3-simple/src/angular_c3_simple.js');
-              $ocLazyLoad.load({
-                name: 'angular-c3-simple'
-              })
-              .then(() => {
-                deferred_2.resolve(module_2);
-              });
+
             }, 
             'history'
           );
-         return $q.all([deferred_1.promise, deferred_2.promise]);
-        }
-      }
+         return deferred_1.promise
+      }}
     })
   //...........................................................................
     .state('historySample', {
@@ -288,32 +305,28 @@ function routing($stateProvider,  $locationProvider, $urlRouterProvider) {
       templateUrl: 'views/history.html',
       controller: 'HistoryCtrl as $ctrl',
       resolve: {
+          /*load: ['$ocLazyLoad', function($ocLazyLoad) {
+              return $ocLazyLoad.load(['plotly','historyController'])
+          }],*/
         ctrl: ($q, $ocLazyLoad) => {
-          'ngInject';
-          let deferred_1 = $q.defer();
-          let deferred_2 = $q.defer();
-          require.ensure(
-            ['d3', 'c3/c3'], 
-            (require) => {
-              let module_1 = require('./controllers/historyController.js');
-              $ocLazyLoad.load({
-                name: module_1.default.name,
-              })
-              .then(() => {
-                deferred_1.resolve(module_1);
-              });
+            'ngInject';
+            let deferred_1 = $q.defer();
+            require.ensure(
+                [],
+                (require) => {
+                    let module_1 = require('./controllers/historyController.js');
+                    $ocLazyLoad.load({
+                            name: module_1.default.name,
+                        })
+                        .then(() => {
+                            deferred_1.resolve(module_1);
+                        });
 
-             let module_2 = require('../lib/angular-c3-simple/src/angular_c3_simple.js');
-              $ocLazyLoad.load({
-                name: 'angular-c3-simple'
-              })
-              .then(() => {
-                deferred_2.resolve(module_2);
-              });
-            }, 
-            'history'
-          );
-         return $q.all([deferred_1.promise, deferred_2.promise]);
+
+                },
+                'history'
+            );
+            return deferred_1.promise
         }
       }
     })

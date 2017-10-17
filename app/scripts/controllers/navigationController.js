@@ -1,6 +1,8 @@
 class NavigationCtrl {
-  constructor($scope, $location, EditorProxy, ConfigEditorProxy, mqttClient, whenMqttReady, errors, uiConfig) {
+  constructor($scope, $location, EditorProxy, ConfigEditorProxy, mqttClient, whenMqttReady, errors, uiConfig, rolesFactory) {
     'ngInject';
+
+    $scope.roles = rolesFactory;
 
     $scope.isActive = function(viewLocation){
       return viewLocation === $location.path();

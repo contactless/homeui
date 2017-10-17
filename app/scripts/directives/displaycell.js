@@ -4,10 +4,20 @@ function displayCellDirective(displayCellConfig, $compile) {
   'ngInject';
 
   class DisplayCellController {
-    constructor ($scope, $element, $attrs) {
+    constructor ($scope, $element, $attrs, handleData) {
       'ngInject';
+      //this.$scope = $scope;
       this.cell = $scope.cell;
+      //console.log("+++++++++this.cell",this.cell);
+
+      //this.handleData = handleData;
     }
+
+    /*copy() {
+      console.log("this.parentName && this.cell.id",this.$scope.parentName , this.$scope.cell.id);
+
+      if(this.parentName && this.cell.id) this.handleData.copyToClipboard(this.$scope.parentName + '/' + this.$scope.cell.id)
+    }*/
 
     shouldDisplayCellName () {
       return !this.compact() &&
@@ -19,7 +29,7 @@ function displayCellDirective(displayCellConfig, $compile) {
   return {
     restrict: 'EA',
     require: '^cell',
-    scope: false,
+    scope: false,// нельзя изолировать
     replace: true,
     bindToController: {
       compact: '&',
@@ -32,6 +42,7 @@ function displayCellDirective(displayCellConfig, $compile) {
     controllerAs: 'displayCellCtrl',
     template,
     link: (scope, element, attrs) => {
+
       scope.$watch(() => scope.cell.displayType, displayType => {
         var directive = (displayCellConfig.displayTypes.hasOwnProperty(displayType) ?
                          displayCellConfig.displayTypes[displayType] :

@@ -12,137 +12,157 @@
   </head>
 
   <body ng-app="realHomeuiApp">
-    <!--[if lt IE 7]>
-      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-    <![endif]-->
-
-    <div id="wrapper" ng-class="{ 'show-console': consoleVisible }">
+  <div id="wrapper" ng-class="{ 'show-console': consoleVisible }">
 
       <!-- Navigation -->
       <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation" ng-controller='NavigationCtrl'>
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" ui-sref="home">Wiren Board Web UI</a>
+          <!-- Brand and toggle get grouped for better mobile display -->
+          <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" ui-sref="home">Wiren Board Web UI</a>
 
 
-          <p class="navbar-text navbar-right connection-status">
-			    <span  class="" ng-class="(isConnected()) ? '' : 'label label-danger'" ng-bind="isConnected() ? 'Connected' : 'Disconnected'"></span>
-          </p>
-        </div>
+              <p class="navbar-text navbar-right connection-status">
+                  <!--<a ui-sref="help">label label-warning
+                    <i class="glyphicon glyphicon-question-sign"></i>
+                  </a>-->
+                  <span class="label label-warning label-custom"
+                        ng-show="roles.current.roles.shortName"
+                        title="access level: {{roles.current.roles.name}}">
+                      {{roles.current.roles.shortName}}
+                  </span>
+                  <span class="connected-status" ng-class="(isConnected()) ? 'label label-success' : 'label label-danger'"
+                        ng-bind="isConnected() ? 'Connected' : 'Disconnected'"></span>
+              </p>
+          </div>
 
-        <div class="nav navbar-nav navbar-right">
-        </div>
+          <div class="nav navbar-nav navbar-right"></div>
 
-        <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
-        <div class="collapse navbar-collapse navbar-ex1-collapse">
-          <ul class="nav navbar-nav side-nav">
-            <li ui-sref-active="active">
-              <a ui-sref="home"><i class="glyphicon glyphicon-cog"></i> Home</a>
-            </li>
-            <li ui-sref-active="active" class="list-menu">
-              <a ui-sref="dashboards"><i class="glyphicon glyphicon-dashboard"></i> Dashboards</a>
-              <a href="javascript:;" data-toggle="collapse" data-target="#dashboards-menu"><i class="glyphicon glyphicon-menu-down"></i></a>
-              <ul id="dashboards-menu" class="collapse">
-                <li ng-repeat="d in dashboards()" dashboard-menu-item>
-                  <a ui-sref="dashboard({ id: d.id })" ui-sref-active="active">{{ d.name }}</a>
-                </li>
+          <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
+          <div class="collapse navbar-collapse navbar-ex1-collapse">
+              <ul class="nav navbar-nav side-nav">
+                  <li ui-sref-active="active">
+                      <a ui-sref="home"><i class="glyphicon glyphicon-cog"></i> Home</a>
+                  </li>
+                  <li ui-sref-active="active">
+                      <a href="javascript:" data-toggle="collapse" data-target="#dashboards-menu">
+                          <i class="glyphicon glyphicon-wrench"></i> Dashboards
+                      </a>
+                      <ul id="dashboards-menu" class="collapse">
+                          <li>
+                              <a ui-sref="dashboards">List</a>
+                          </li>
+                          <li ng-repeat="d in dashboards()" dashboard-menu-item>
+                              <a ui-sref="dashboard({ id: d.id })" ui-sref-active="active">{{ d.name }}</a>
+                          </li>
+                      </ul>
+                  </li>
+                  <li ui-sref-active="active" user-role="mto" current-role="roles.current.role">
+                      <a ui-sref="devices"><i class="glyphicon glyphicon-cog"></i> Devices</a>
+                  </li>
+                  <li ui-sref-active="active">
+                      <a ui-sref="widgets"><i class="glyphicon glyphicon-list-alt"></i> Widgets</a>
+                  </li>
+                  <li ui-sref-active="active">
+                      <a ui-sref="history"><i class="glyphicon glyphicon-stats"></i> History</a>
+                  </li>
+                  <li ng-if="isConnected()" ui-sref-active="active"
+                      user-role="mtt" current-role="roles.current.role">
+                      <a ui-sref="scripts"><i class="glyphicon glyphicon-file"></i> Scripts</a>
+                  </li>
+                  <li ui-sref-active="active">
+                      <a href="javascript:" data-toggle="collapse" data-target="#settings-menu">
+                          <i class="glyphicon glyphicon-wrench"></i> Settings
+                      </a>
+                      <ul id="settings-menu" class="collapse">
+                          <li ng-show="isConnected()" user-role="mtt" current-role="roles.current.role">
+                              <a ui-sref="configs" ui-sref-active="active">Configs</a>
+                          </li>
+                          <li>
+                              <a ui-sref="webUI" ui-sref-active="active">Web UI</a>
+                          </li>
+                          <li user-role="mtt" current-role="roles.current.role">
+                              <a ui-sref="system" ui-sref-active="active">System</a>
+                          </li>
+                          <li>
+                              <a ui-sref="MQTTChannels" ui-sref-active="active">MQTT Channels</a>
+                          </li>
+                          <li>
+                              <a ui-sref="accessLevel" ui-sref-active="active">Change access level</a>
+                          </li>
+                      </ul>
+                  </li>
+                  <li ui-sref-active="help">
+                      <a ui-sref="help"><i class="glyphicon glyphicon-question-sign"></i> Help</a>
+                  </li>
               </ul>
-            </li>
-            <li ui-sref-active="active">
-              <a ui-sref="devices"><i class="glyphicon glyphicon-cog"></i> Devices</a>
-            </li>
-            <li ui-sref-active="active">
-              <a ui-sref="widgets"><i class="glyphicon glyphicon-list-alt"></i> Widgets</a>
-            </li>
-            <li ui-sref-active="active">
-              <a ui-sref="history"><i class="glyphicon glyphicon-stats"></i> History</a>
-            </li>
-            <li ng-if="isConnected()" ui-sref-active="active">
-              <a ui-sref="scripts"><i class="glyphicon glyphicon-file"></i> Scripts</a>
-            </li>
-
-            <li ng-if="isConnected()" ui-sref-active="active" class="list-menu config-menu">
-              <a ui-sref="configs"><i class="glyphicon glyphicon-file"></i> Configs</a>
-              <a href="javascript:;" data-toggle="collapse" data-target="#configs-menu"><i class="glyphicon glyphicon-menu-down"></i></a>
-              <ul id="configs-menu" class="collapse">
-                <li ng-repeat="config in getConfigs()">
-                  <a ui-sref="configEdit({ path: config.schemaPath })"
-                    ui-sref-active="active">
-                    {{ config.title }}
-                    <span class="glyphicon glyphicon-alert" ng-show="!!config.error"></span>
-                  </a>
-                </li>
-              </ul>
-            </li>
-            <li ui-sref-active="active">
-              <a ui-sref="settings"><i class="glyphicon glyphicon-wrench"></i> Settings</a>
-            </li>
-          </ul>
-        </div>
-        <!-- /.navbar-collapse -->
+          </div>
+          <!-- /.navbar-collapse -->
       </nav>
 
       <div id="page-wrapper">
 
-        <div class="container-fluid">
+          <div class="container-fluid">
 
-          <!-- Page Heading -->
-          <div class="row">
-            <div class="col-lg-12">
-              <div class="alert alert-success" role="alert" ng-show='showCreated' ng-cloak>
-                <strong>Changes</strong> successfully saved.
+              <!-- Page Heading -->
+              <div class="row">
+                  <div class="col-lg-12">
+                      <div class="alert alert-success" role="alert" ng-show='showCreated' ng-cloak>
+                          <strong>Changes</strong> successfully saved.
+                      </div>
+                      <div class="alert alert-danger" role="alert" ng-cloak ng-controller="AlertCtrl" ng-show="visible">
+                          <button type="button" class="close" ng-click="visible = false;"
+                                  aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                          <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                          <!-- <span class="sr-only">Error:</span> -->
+                          <span ng-bind-html="messageHtml"></span>
+                      </div>
+                      <!-- viewport for child view -->
+                      <div ng-show='stateIsLoading'>
+                          <strong>Loading...</strong>
+                      </div>
+                      <ui-view ng-hide='stateIsLoading'></ui-view>
+                  </div>
               </div>
-              <div class="alert alert-danger" role="alert" ng-cloak ng-controller="AlertCtrl" ng-show="visible">
-                <button type="button" class="close" ng-click="visible = false;"
-                        aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-                <!-- <span class="sr-only">Error:</span> -->
-                <span ng-bind-html="messageHtml"></span>
-              </div>
-              <!-- viewport for child view -->
-              <div ng-show='stateIsLoading'>
-                <strong>Loading...</strong>
-              </div>
-                <ui-view ng-hide='stateIsLoading'></ui-view>
-            </div>
-          </div>
-          <!-- /.row -->
+              <!-- /.row -->
 
-          <!-- Page Footer -->
-          <div class="row" style="height:40px;">
-            <footer>
-              <a href="http://contactless.ru"><img src="images/contactless.png" alt="Contactless" title="Contactless - Бесконтактные устройства" style="margin-right:15px;"></a>
-              <a href="https://carbonfay.ru"><img src="images/carbonfay.png" alt="Carbonfay" title="Carbonfay/ on rails - Быстрая разработка корпоративных проектов" style="padding-left: 5px;"></a>
-            </footer>
+              <!-- Page Footer -->
+              <div class="row" style="height:40px;">
+                  <footer>
+                      <a href="http://contactless.ru">
+                          <img src="images/contactless.png" alt="Contactless" title="Contactless - Бесконтактные устройства" style="margin-right:15px;">
+                      </a>
+                      <a href="https://carbonfay.ru">
+                          <img src="images/carbonfay.png" alt="Carbonfay" title="Carbonfay/ on rails - Быстрая разработка корпоративных проектов" style="padding-left: 5px;">
+                      </a>
+                  </footer>
+              </div>
+              <!-- /footer -->
           </div>
-          <!-- /footer -->
-        </div>
-        <!-- /.container-fluid -->
+          <!-- /.container-fluid -->
 
       </div>
       <!-- /#page-wrapper -->
 
-    </div>
+  </div>
 
-    <div class="console" ng-show="consoleVisible">
+  <div class="console" ng-show="consoleVisible">
       <console></console>
       <button type="button" name="close" class="close"
               ng-click="consoleVisible = false">
-        <span class="glyphicon glyphicon-remove"></span>
+          <span class="glyphicon glyphicon-remove"></span>
       </button>
-    </div>
+  </div>
 
-    <button type="button" class="btn btn-default btn-lg show-console"
-            ng-hide="consoleVisible"
-            ng-click="consoleVisible = true">
+  <button type="button" class=" btn-default btn-lg show-console"
+          ng-hide="consoleVisible"
+          ng-click="consoleVisible = true">
       <span class="glyphicon glyphicon-wrench"></span>
-    </button>
-
+  </button>
   </body>
 </html>

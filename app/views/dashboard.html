@@ -4,20 +4,33 @@
     <a href='#/dashboards/{{dashboard.uid}}/edit' class='pull-right'><i class="glyphicon glyphicon-edit black medium"></i></a>
     -->
   <button type="button"
+          user-role="mto" current-role="roles.current.role"
           name="add-widget"
           class="btn btn-success pull-right"
           ng-click="addWidget()">
     Add widget
   </button>
 </h1>
-<div id="widgets-list" class="multicol-list">
-  <ul class="list-unstyled" sv-root sv-part="dashboard.widgets">
-    <li ng-repeat="widget in dashboard.widgets" sv-element>
-      <widget source="widget"
-              can-remove="true"
-              on-remove="removeWidget(widget)"
-              can-delete="true"
-              on-delete="deleteWidget(widget)"></widget>
-    </li>
-  </ul>
+
+<div ng-switch="dashboard.content.isSvg">
+  <div ng-switch-when="true">
+    <svg-scheme
+         devices="dashboard.devices"
+         ng-include="dashboard.content.svg_url"
+         svg-full-width="dashboard.content.svg_fullwidth"></svg-scheme>
+  </div>
+
+  <div ng-switch-default>
+    <div id="widgets-list" class="multicol-list">
+      <ul class="list-unstyled" sv-root sv-part="dashboard.widgets">
+        <li ng-repeat="widget in dashboard.widgets" sv-element>
+          <widget source="widget"
+                  can-remove="true"
+                  on-remove="removeWidget(widget)"
+                  can-delete="true"
+                  on-delete="deleteWidget(widget)"></widget>
+        </li>
+      </ul>
+    </div>
+  </div>
 </div>

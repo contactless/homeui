@@ -1,7 +1,9 @@
 class ConfigCtrl {
-  constructor($scope, $stateParams, $timeout, ConfigEditorProxy, whenMqttReady, gotoDefStart, $location, PageState, errors) {
+  constructor($scope, $stateParams, rolesFactory, ConfigEditorProxy, whenMqttReady, gotoDefStart, $location, PageState, errors) {
     'ngInject';
 
+    this.haveRights = rolesFactory.checkRights(rolesFactory.ROLE_THREE);
+    if(!this.haveRights) return;
     $scope.file = {
       schemaPath: $stateParams.path,
       configPath: "",

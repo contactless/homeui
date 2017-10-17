@@ -1,8 +1,19 @@
-<span ng-switch on="cell.readOnly" class="cell cell-switch">
-  <!--
+<!--<span ng-switch on="cell.readOnly" class="cell cell-switch">
+  &lt;!&ndash;
       Extra <span> around the template is needed to avoid
       "Multiple directives ... asking for new/isolated scope on" error.
-    -->
+    &ndash;&gt;
   <input ng-switch-when="true" type="checkbox" readonly disabled ng-model="cell.value">
   <toggle-switch ng-switch-default class="control-value" ng-model="cell.value"></toggle-cell>
+</span>
+  для смартадмин-->
+<span class="cell cell-switch">
+  <span class="onoffswitch">
+      <input type="checkbox" ng-model="cell.value" class="onoffswitch-checkbox" id="{{id}}">
+      <label class="onoffswitch-label" for="{{id}}"
+             ng-class="{'pointer-none text-muted':cell.readOnly==true}">
+          <span class="onoffswitch-inner" data-swchon-text="ON" data-swchoff-text="OFF"></span>
+          <span class="onoffswitch-switch"></span>
+      </label>
+  </span>
 </span>

@@ -835,6 +835,7 @@ Paho.MQTT = (function (global) {
 		var connectOptionsMasked = this._traceMask(connectOptions, "password");
 		this._trace("Client.connect", connectOptionsMasked, this.socket, this.connected);
 
+
 		if (this.connected)
 			throw new Error(format(ERROR.INVALID_STATE, ["already connected"]));
 		if (this.socket)

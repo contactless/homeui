@@ -6,7 +6,7 @@
 
 /* Global Styles */
 
-[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+[ng\:cloak], [ng-cloak], [data-ng-cloak],  .ng-cloak, .x-ng-cloak {
   display: none !important;
 }
 
@@ -526,6 +526,21 @@ button.show-console span {
   background: transparent;
 }
 
+.devices-control.alert {
+    padding: 0;
+}
+
+.display-cell {
+    width: calc(100% - 40px);
+}
+
+.display-cell-btn {
+    float: right;
+    padding: 0 4px 1px 3px;
+}
+.display-cell-btn i{
+    font-size: 10px;
+}
 .display-cell .value,
 .display-cell .units,
 .display-cell input {
@@ -719,4 +734,66 @@ button.show-console span {
 .table.webui-table td,
 .table.webui-table th {
   vertical-align: middle;
+}
+
+.history-time-col-l {
+    padding-top: 42px;
+}
+
+.history-time-col-r {
+    padding-top: 34px;
+}
+
+.jarviswidget > div {
+    border-width: 1px;
+}
+
+svg-scheme {
+    display: block;
+}
+
+svg:not(:root) {
+    overflow: auto;
+}
+/*переназначаю цвета кнопок*/
+.uib-datepicker-popup .btn-success {
+    background-color: white;
+    border-color: lightgrey;
+    color: black;
+}
+.uib-datepicker-popup .btn-danger {
+    background-color: #456b7b;
+    border-color: #456b7b;
+}
+.uib-datepicker-popup .btn-info {
+    background-color: #5b835b;
+    border-color: #5b835b;
+}
+
+/*разъединяю btn-group */
+.uib-datepicker-popup .btn-group>.btn:first-child:not(:last-child):not(.dropdown-toggle) {
+    border-bottom-right-radius: 2px;
+    border-top-right-radius: 2px;
+}
+.uib-datepicker-popup .btn-group>.btn:last-child:not(:first-child) {
+    border-bottom-left-radius: 2px;
+    border-top-left-radius: 2px;
+}
+.uib-datepicker-popup .btn-group>.btn {
+     float: none;
+}
+
+/*активная кнопка сегодня*/
+.uib-datepicker-popup .btn-info .text-info {
+    color: white;
+}
+/*выключаю нажим кнопки*/
+[uib-datepicker-popup-wrap] + span .btn:active {
+     top: 0;
+     left: 0;
+}
+
+[uib-datepicker] .btn {
+    /*border-color: rgba(0,0,0,0);*/
+    border: none;
 }

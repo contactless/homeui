@@ -1,65 +1,68 @@
 <h1 class="page-header">
-  Widgets
+    Widgets
 </h1>
 <div class="empty-list well" ng-if="!rows.length">No widgets are currently defined.</div>
-<table class="table widgets-table webui-table table-condensed" ng-if="rows.length">
-  <thead>
+
+<table class="table widgets-table webui-table table-condensed table-scroll " ng-if="rows.length">
+    <thead>
     <tr>
-      <th class="idx-col">#</th>
-      <th class="name-col">Name</th>
-      <th class="cell-name-col">Cells</th>
-      <th class="cell-type-col">Types</th>
-      <th class="cell-value-col">Values</th>
-      <th class="cell-history-col"></th>
-      <th class="description-col">Description</th>
-      <th class="dashboards-col">Dashboards</th>
-      <th class="button-col"></th>
+        <th class="idx-col">#</th>
+        <th class="name-col">Name</th>
+        <th class="cell-name-col">Cells</th>
+        <th class="cell-type-col">Types</th>
+        <th class="cell-value-col">Values</th>
+        <th class="idx-col">Graph</th>
+        <th class="description-col">Description</th>
+        <th class="dashboards-col">Dashboards</th>
+        <th class="button-col"></th>
     </tr>
-  </thead>
-  <tbody>
-    <tr ng-repeat="row in rows | filter:{show:true} | orderBy:['name', 'id', 'cellIndex']">
-      <th ng-if="!!row.widget" class="idx-col" scope="row" rowspan="{{ row.rowSpan }}">{{ $index+1 }}</th>
-      <td ng-if="!!row.widget" class="name-col" rowspan="{{ row.rowSpan }}">{{ row.name }}</td>
-      <td ng-if="row.widget && row.preview" class="preview-col" colspan="4">
-        <widget source="row.widget"></widget>
-      </td>
-      </td>
-      <td ng-if="!row.preview" class="cell-name-col" cell="row.cell.id">
-        <cell-name override="row.cell.name" display-id="true"></cell-name>
-      </td>
-      <td ng-if="!row.preview" class="cell-type-col" cell="row.cell.id">
-        {{ cell.type }}
-      </td>
-      <td ng-if="!row.preview" class="cell-value-col" cell="row.cell.id">
-        <display-cell compact="true"></display-cell>
-      </td>
-      <td ng-if="!row.preview" class="cell-history-col">
-        <a title="History" class="cell-history" ui-sref="historySample({device: row.cell.device, control: row.cell.control, start: historyStartTS(), end: '-'})"><i class="glyphicon glyphicon-stats"></i></a>
-      </td>
-      <td ng-if="!!row.widget" class="description-col" rowspan="{{ row.rowSpan }}">{{ row.widget.description }}</td>
-      <td ng-if="!!row.widget" class="dashboards-col" rowspan="{{ row.rowSpan }}">
-        <ul ng-if="row.dashboards.length">
-          <li ng-repeat="dashboard in row.dashboards">
-            <a ui-sref="dashboard({ id: dashboard.id })">{{ dashboard.name }}</a>
-          </li>
-        </ul>
-      </td>
-      <td ng-if="!!row.widget" class="button-col" rowspan="{{ row.rowSpan }}">
-        <button type="button" class="icon-button" name="delete" ng-click="row.deleteWidget()"><i class="glyphicon glyphicon-trash medium"></i></button>
-        <button ng-if="!row.preview"
-                type="button"
-                class="icon-button"
-                name="preview"
-                title="Widget view"
-                ng-click="row.preview = true"><i class="glyphicon glyphicon-play-circle medium"></i></button>
-        <button ng-if="row.preview"
-                type="button"
-                class="icon-button"
-                name="table"
-                title="Table view"
-                ng-click="row.preview = false"><i class="glyphicon glyphicon-list-alt medium"></i></button>
-      </td>
+    </thead>
+    <tbody>
+    <tr ng-repeat="row in rows track by $index">
+        <th ng-if="!!row.widget" class="idx-col" scope="row" rowspan="{{ row.rowSpan }}">{{row._id}}</th>
+        <td ng-if="!!row.widget" class="name-col" rowspan="{{ row.rowSpan }}">{{ row.name }}</td>
+        <td ng-if="row.widget && row.preview" class="preview-col" colspan="4">
+            <widget source="row.widget"></widget>
+        </td>
+        <td ng-if="!row.preview" class="cell-name-col" cell="row.cell.id">
+            <cell-name override="row.cell.name" display-id="true"></cell-name>
+        </td>
+        <td ng-if="!row.preview" class="cell-type-col" cell="row.cell.id">
+            {{ cell.type }}
+        </td>
+        <td ng-if="!row.preview" class="cell-value-col" cell="row.cell.id">
+            <display-cell compact="true"></display-cell>
+        </td>
+        <td ng-if="!row.preview" class="cell-history-col">
+            <a title="History" class="cell-history"
+               ui-sref="historySample({device: row.cell.device, control: row.cell.control, start: historyStartTS(), end: '-'})"><i
+                    class="glyphicon glyphicon-stats"></i></a>
+        </td>
+        <td ng-if="!!row.widget" class="description-col" rowspan="{{ row.rowSpan }}">{{ row.widget.description }}</td>
+        <td ng-if="!!row.widget" class="dashboards-col" rowspan="{{ row.rowSpan }}">
+            <ul ng-if="row.dashboards.length">
+                <li ng-repeat="dashboard in row.dashboards">
+                    <a ui-sref="dashboard({ id: dashboard.id })">{{ dashboard.name }}</a>
+                </li>
+            </ul>
+        </td>
+        <td ng-if="!!row.widget" class="button-col" rowspan="{{ row.rowSpan }}">
+            <button type="button" class="icon-button" name="delete" ng-click="row.deleteWidget()"><i
+                    class="glyphicon glyphicon-trash medium"></i></button>
+            <button ng-if="!row.preview"
+                    type="button"
+                    class="icon-button"
+                    name="preview"
+                    title="Widget view"
+                    ng-click="row.preview = true"><i class="glyphicon glyphicon-play-circle medium"></i></button>
+            <button ng-if="row.preview"
+                    type="button"
+                    class="icon-button"
+                    name="table"
+                    title="Table view"
+                    ng-click="row.preview = false"><i class="glyphicon glyphicon-list-alt medium"></i></button>
+        </td>
     </tr>
-  </tbody>
+    </tbody>
 </table>
 

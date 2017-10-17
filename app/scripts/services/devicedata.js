@@ -320,8 +320,8 @@ function deviceDataService(mqttClient) {
     }
 
     receiveValue (newValue) {
-      if (!newValue)
-        this._value = this._isString() ? "" : null; // value removed, non-pushbutton/text cell becomes incomplete
+      if (!newValue) /// ozk замена null на  '-' тут и в 342 строке
+        this._value = this._isString() ? "" : '-' /*null*/; // value removed, non-pushbutton/text cell becomes incomplete
       else
         this._setCellValue(newValue);
       this._updateCompleteness();
@@ -339,7 +339,7 @@ function deviceDataService(mqttClient) {
     }
 
     isComplete () {
-      return this.type != "incomplete" && (this._isButton() || this._value !== null);
+      return this.type != "incomplete" && (this._isButton() || this._value !== '-' /*null*/);/// ozk замена null на  '-'
     }
 
     _updateCompleteness () {
@@ -383,7 +383,7 @@ function deviceDataService(mqttClient) {
     }
 
     setError (error) {
-      this.error = !!error;
+      this.error = error;
     }
 
     setMin (min) {
@@ -438,7 +438,7 @@ function deviceDataService(mqttClient) {
   addCellSubscription("/meta/units",    (cell, payload) => { cell.setUnits(payload);           });
   addCellSubscription("/meta/readonly", (cell, payload) => { cell.setReadOnly(payload == "1"); });
   addCellSubscription("/meta/writable", (cell, payload) => { cell.setWritable(payload == "1"); });
-  addCellSubscription("/meta/error",    (cell, payload) => { cell.setError(!!payload);         });
+  addCellSubscription("/meta/error",    (cell, payload) => { cell.setError(payload);         });
   addCellSubscription("/meta/min",      (cell, payload) => { cell.setMin(payload);             });
   addCellSubscription("/meta/max",      (cell, payload) => { cell.setMax(payload);             });
   addCellSubscription("/meta/step",     (cell, payload) => { cell.setStep(payload);            });

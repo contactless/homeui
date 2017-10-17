@@ -2,6 +2,13 @@
   <input ng-if="cell.valueType == 'number' && !cell.readOnly" type="number"
          min="{{ cell.min }}" max="{{ cell.max }}" step="{{ cell.step }}"
          ng-model="cell.value" explicit-changes>
-  <span ng-if="cell.readOnly" class="value">{{ cell.value }}</span>
+  <span ng-if="cell.readOnly" class="value">
+    <span style="display:none">{{ __value = ('' + cell.value).split('.') }}</span>
+    <span class="int">
+      <span>{{ __value[0] }}</span>
+    </span>
+    <span class="comma" ng-show="__value[1]">.</span>
+    <span class="decimal">{{ __value[1] }}</span>
+  </span>
   <span class="units">{{ cell.units }}</span>
 </span>

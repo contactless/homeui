@@ -2,5 +2,8 @@
      ng-switch on="cell.displayType"
      ng-class="{ 'cell-error': cell.error }"
      data-cell-id="{{ cell.id }}">
-  <cell-name ng-if="displayCellCtrl.shouldDisplayCellName()" override="displayCellCtrl.overrideName()"></cell-name>
+    <cell-name ng-if="displayCellCtrl.shouldDisplayCellName()"
+               override="displayCellCtrl.overrideName()"></cell-name>
 </div>
+<!--uib-tooltip="{{parentName}}/{{cell.id}}"
+     tooltip-class="custom-tooltip"-->

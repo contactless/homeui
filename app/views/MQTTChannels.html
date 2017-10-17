@@ -1,0 +1,36 @@
+<h1 class="page-header">MQTT Channels</h1>
+
+<div class="table-responsive">
+    <table class="table table-bordered table-hover">
+        <thead>
+        <tr>
+            <th>Device</th>
+            <th>Control</th>
+            <th>Type</th>
+            <th>Topic</th>
+            <th>Value</th>
+            <th>Status</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="row in $ctrl.getRows()">
+            <td>{{row.deviceId}}</td>
+            <td>{{row.controlId }}</td>
+            <td>
+                {{row.type }}
+                <span ng-show="row._metaReadonly">(ro)</span>
+            </td>
+            <td>/devices/{{row.deviceId}}/controls/{{row.controlId }}</td>
+            <td>{{row._value}}</td>
+            <td>
+                <span ng-show="row.error" class="label label-danger">
+                  Error: {{row.error }}
+                </span>
+                <span ng-show="!row.error" class="label label-success">
+                  OK
+                </span>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>

@@ -1,7 +1,10 @@
 <h1 class="page-header">
   Dashboards
 </h1>
-<div class="empty-list well" ng-if="!$ctrl.data.dashboards.length">No dashboards currently defined.</div>
+
+<div class="empty-list well" ng-if="!$ctrl.data.dashboards.length">
+  No dashboards currently defined.
+</div>
 <table class="table dashboards-table webui-table" ng-if="$ctrl.data.dashboards.length">
   <thead>
     <tr>
@@ -12,12 +15,12 @@
     </tr>
   </thead>
   <tbody sv-root sv-part="$ctrl.data.dashboards">
-    <tr class="dashboard" ng-repeat="dashboard in $ctrl.data.dashboards" sv-element>
-      <th class="idx-col" scope="row" >{{ $index+1 }}</th>
+    <tr class="dashboard" ng-repeat="dashboard in $ctrl.data.dashboards | filter:{isSvg: false}" sv-element>
+      <td class="idx-col" scope="row" >{{ $index+1 }}</td>
       <td class="name-col">
         <span editable-text="dashboard.name"
               e-form="rowform"
-              onbeforesave="checkNonEmpty($data, 'Empty dashboard name is not allowed')">{{ dashboard.name }}</span>
+              onbeforesave="$ctrl.checkNonEmpty($data, 'Empty dashboard name is not allowed')">{{ dashboard.name }}</span>
       </td>
       <td class="id-col">
         <span editable-text="dashboard.id"
@@ -37,8 +40,12 @@
         </form>
         <div class="buttons" ng-show="!rowform.$visible">
           <a class="btn btn-primary" ui-sref="dashboard({ id: dashboard.id })">View</a>
-          <button name="edit" type="button" class="btn btn-primary" ng-click="rowform.$show()">Edit</button>
-          <button name="delete" type="button" class="btn btn-danger" ng-click="$ctrl.model(dashboard).remove()">Delete</button>
+          <button name="edit" type="button" class="btn btn-primary"
+                  user-role="mto" current-role="$ctrl.roles.current.role"
+                  ng-click="rowform.$show()">Edit</button>
+          <button name="delete" type="button" class="btn btn-danger"
+                  user-role="mto" current-role="$ctrl.roles.current.role"
+                  ng-click="$ctrl.deleteDashboard(dashboard)">Delete</button>
         </div>  
         <!--
         <a href='/dashboards/{{dashboard.id}}'><i class="glyphicon glyphicon-play-circle black medium"></i></a>
@@ -47,8 +54,80 @@
     </tr>
   </tbody>
 </table>
-<div class="btn-form">
+<div class="btn-form" user-role="mto" current-role="$ctrl.roles.current.role">
   <button name="add"
           type="button"
-          ng-click="$ctrl.addDashboard()" class="btn btn-default pull-right">Add dashboard</button>
+          ng-click="$ctrl.addDashboard()" class="btn btn-default pull-right">Add</button>
 </div>
+<br><br><br>
+<h1 class="page-header">
+  SVG Dashboards
+</h1>
+
+<table class="table dashboards-table webui-table" ng-if="$ctrl.data.dashboards.length">
+  <thead>
+  <tr>
+    <th class="idx-col">#</th>
+    <th class="name-col">Name</th>
+    <th class="id-col">SVG url</th>
+    <th class="id-col">Full width</th>
+    <th class="id-col">ID</th>
+    <th class="button-col"></th>
+  </tr>
+  </thead>
+  <tbody sv-root sv-part="$ctrl.data.dashboards">
+  <tr class="dashboard" ng-repeat="dashboard in $ctrl.data.dashboards | filter:{isSvg: true}" sv-element>
+    <td class="idx-col" scope="row" >{{ $index+1 }}</td>
+    <td>
+        <span editable-text="dashboard.name"
+              e-form="rowform"
+              onbeforesave="$ctrl.checkNonEmpty($data, 'Empty name is not allowed')">{{ dashboard.name }}</span>
+    </td>
+    <td>
+      <!--<input ng-show="tblTwo[$index].editable" type="text" ng-model="dashboard.svg_url">
+      <span ng-hide="tblTwo[$index].editable">{{ dashboard.svg_url }}</span>-->
+      <span editable-text="dashboard.svg_url"
+            e-form="rowform"
+            onbeforesave="$ctrl.checkNonEmpty($data, 'Empty svg url is not allowed')">{{ dashboard.svg_url }}</span>
+    </td>
+    <td>
+      <input id="svgSchemeWidth" type="checkbox" ng-model="dashboard.svg_fullwidth"
+             ng-true-value="'1'" ng-false-value="''">
+    </td>
+    <td class="id-col">
+        <span editable-text="dashboard.id"
+              e-form="rowform"
+              onbeforesave="$ctrl.checkId($data, dashboard)">{{ dashboard.id }}</span>
+    </td>
+    <td class="button-col">
+      <form editable-form name="rowform" ng-show="rowform.$visible" class="form-buttons form-inline"
+            shown="dashboard.isNew" onaftersave="$ctrl.afterSave(dashboard)" oncancel="cancel(dashboard)">
+        <button type="submit" ng-disabled="rowform.$waiting" class="btn btn-primary">
+          Save
+        </button>
+        <button type="button" name="cancel"
+                ng-disabled="rowform.$waiting" ng-click="rowform.$cancel()" class="btn btn-default">
+          Cancel
+        </button>
+      </form>
+      <div class="buttons" ng-show="!rowform.$visible">
+        <a class="btn btn-primary" ui-sref="dashboard({ id: dashboard.id })">View</a>
+        <button name="edit" type="button" class="btn btn-primary"
+                ng-disable="!dashboard.svg_url.length"
+                user-role="mto" current-role="$ctrl.roles.current.role"
+                ng-click="rowform.$show()">Edit</button>
+        <button name="delete" type="button" class="btn btn-danger"
+                user-role="mto" current-role="$ctrl.roles.current.role"
+                ng-click="$ctrl.deleteDashboard(dashboard)">Delete</button>
+      </div>
+    </td>
+  </tr>
+  </tbody>
+</table>
+<div class="btn-form" user-role="mto" current-role="$ctrl.roles.current.role">
+  <button name="add"
+          type="button"
+          ng-click="$ctrl.addDashboardWithSvg()" class="btn btn-default pull-right">Add</button>
+</div>
+<!--
+<pre>{{$ctrl.data.dashboards | json}}</pre>-->

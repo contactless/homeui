@@ -1,0 +1,47 @@
+
+<h1 class="page-header">Web UI</h1>
+
+<div class="row">
+    <login-form></login-form>
+
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><i class="glyphicon glyphicon-wrench"></i> Common Info</h3>
+            </div>
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Value</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat='setting in $ctrl.settings'>
+                            <td>{{ setting.name }}</td>
+                            <td>{{ setting.value }}</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Default Dashboard
+                                <a ng-show='$ctrl.defaultDashboard'
+                                   user-role="mto" current-role="$ctrl.roles.current.role"
+                                   ui-sref="dashboard({ id: $ctrl.defaultDashboard.id })"><i class="glyphicon glyphicon-edit black medium"></i></a>
+                                <a ng-show='$ctrl.defaultDashboard'
+                                   ui-sref="dashboard({ id: $ctrl.defaultDashboard.id })"><i class="glyphicon glyphicon-play-circle black medium"></i></a>
+                            </td>
+                            <td class="text-center">
+                                <select ng-model="$ctrl.defaultDashboard" ng-options="dashboard.name for dashboard in $ctrl.dashboards track by dashboard.id" ng-change="$ctrl.changeDefaultDashboard()">
+                                    <option value="">- Please Choose / None -</option>
+                                </select>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

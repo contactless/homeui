@@ -1,7 +1,8 @@
 class WidgetsCtrl {
-  constructor($scope, uiConfig, DeviceData, getTime) {
+  constructor($scope, uiConfig, DeviceData, handleData) {
     'ngInject';
-    
+
+    this.handleData = handleData;
     $scope.cell = id => {
       return DeviceData.proxy(id);
     };
@@ -19,12 +20,7 @@ class WidgetsCtrl {
       };
     }
 
-    $scope.historyStartTS = () => {
-      var t = getTime(),
-          d = new Date();
-      d.setTime(t);
-      return new Date(d.getFullYear(), d.getMonth(), d.getDate()).getTime();
-    };
+    $scope.historyStartTS = () => this.handleData.historyStartTS();
     $scope.rows = [];
     $scope.$watch(uiConfig.version, () => {
       var dashboardMap = Object.create(null);
@@ -34,10 +30,11 @@ class WidgetsCtrl {
         });
       });
       // XXX: dashboards. perhaps should add config change tracking
-      $scope.rows = Array.prototype.concat.apply([], uiConfig.data.widgets.map(widget => {
+      $scope.rows = Array.prototype.concat.apply([], uiConfig.data.widgets.map((widget,i) => {
         var primaryRow = {
           name: widget.name,
           id: widget.id,
+          _id:i+1,
           widget: widget,
           get rowSpan () {
             return this.preview ? 1 : Math.max(widget.cells.length, 1);
@@ -55,6 +52,7 @@ class WidgetsCtrl {
         return [ primaryRow ].concat(widget.cells.slice(1).map((cell, n) => ({
           name: widget.name,
           id: widget.id,
+          _id: widget.id.slice(6),
           widget: null,
           cellIndex: n + 2,
           cell: wrapWidgetCell(cell),

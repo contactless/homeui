@@ -1,12 +1,12 @@
 class LoginFormCtrl {
   //...........................................................................
-  constructor ($window, $rootScope, $state, $location, /*errors, mqttClient, whenMqttReady, ConfigEditorProxy, uiConfig, webuiConfigPath */) {
+  constructor ($window, $rootScope, $state, $location,rolesFactory) {
     'ngInject';
 
     this.rootScope = $rootScope;
-
     this.localStorage = $window.localStorage;
     this.state = $state;
+    this.rolesFactory = rolesFactory;
     this.currentHost = $location.host();
 
     // this.errors = errors;
@@ -22,7 +22,6 @@ class LoginFormCtrl {
     this.loginSettings.user = this.localStorage['user'];
     this.loginSettings.password = this.localStorage['password'];
     this.loginSettings.prefix = this.localStorage['prefix'];
-
     if (this.loginSettings.user || this.loginSettings.password) {
       this.loginSettings.useCredentials = true;
     } else {
@@ -47,7 +46,7 @@ class LoginFormCtrl {
     if (port) {
       this.port = port;
     } else {
-      this.port = '1883';
+      this.port = '18883';
     }
     if (useCredentials) {
       this.useCredentials = useCredentials;
@@ -96,7 +95,9 @@ class LoginFormCtrl {
       prefix: this.prefix
     };
 
+    this.rolesFactory.setRole(1);
     this.rootScope.requestConfig(loginData);
+    location.reload();
   }
 }
 

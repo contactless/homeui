@@ -2,8 +2,11 @@ import 'codemirror/lib/codemirror.css';
 import 'codemirror/mode/javascript/javascript';
 
 class ScriptCtrl {
-  constructor($scope, $stateParams, $timeout, EditorProxy, whenMqttReady, gotoDefStart, $location, PageState, errors) {
+  constructor($scope, $stateParams, $timeout, EditorProxy, whenMqttReady, gotoDefStart, $location, PageState, errors, rolesFactory) {
     'ngInject';
+
+    this.haveRights = rolesFactory.checkRights(rolesFactory.ROLE_THREE);
+    if(!this.haveRights) return;
 
     var cm, pos = null;
     $scope.canSave = function () {

@@ -1,0 +1,26 @@
+
+<h1 class="page-header">System</h1>
+
+<div class="panel panel-default" ng-controller="FirmwareCtrl">
+    <div class="panel-heading">
+        <h3 class="panel-title"><i class="glyphicon glyphicon-upload"></i> Firmware update</h3>
+    </div>
+    <div class="panel-body">
+    <span ng-show="!canUpload" class="label label-warning">
+      Firmware update service is not available
+    </span>
+        <button type="file" class="btn btn-success btn-lg"
+                ng-show="canUpload && !(running || uploading)"
+                ngf-select="upload($file)"
+                ngf-max-size="300MB"
+                ngf-pattern="'.fit,.*'">Select file</button>
+        <div class="progress" ng-show="running || uploading">
+            <div class="progress-bar progress-bar-{{stateType}}"
+                 ng-style="{'width':progress + '%'};">
+                <span ng-bind="stateMsg"></span>
+            </div>
+        </div>
+        <pre id="firmwareLog" class="well well-sm pre-scrollable" ng-show="running"></pre>
+        <button class="btn btn-lg btn-default" ng-show="done" ng-click="doneClick()" ng-bind="doneLabel"></button>
+    </div>
+</div>

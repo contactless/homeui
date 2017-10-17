@@ -1,15 +1,24 @@
-<h1 class="page-header">
-  <span ng-if="!file.isNew">{{ file.path }}</span>
-  <input ng-if="file.isNew" type="text" ng-model="file.path">
-</h1>
 
-<div class="spinner" ng-show="spinnerActive('editorProxy')" ng-cloak>
-  <span class="spinner-loader">Loading...</span>
+<div class="alert alert-danger alert-dismissible" role="alert"
+     ng-hide="$ctrl.haveRights">
+  You cannot view this page. You can change <a ui-sref="accessLevel">access level</a>.
 </div>
 
-<form class="script-editor" ng-if="!spinnerActive('editorProxy')" name="scriptEditor" script-form>
-  <button class="btn btn-primary" name="save" ng-click="save()" ng-disabled="!canSave()">Save</button>
+<section ng-if="$ctrl.haveRights">
+  <h1 class="page-header">
+    <span ng-if="!file.isNew">{{ file.path }}</span>
+    <input ng-if="file.isNew" type="text" ng-model="file.path">
+  </h1>
+
+  <div class="spinner" ng-show="spinnerActive('editorProxy')" ng-cloak>
+    <span class="spinner-loader">Loading...</span>
+  </div>
+
+  <form class="script-editor" ng-if="!spinnerActive('editorProxy')" name="scriptEditor" script-form>
+    <button class="btn btn-primary" name="save" ng-click="save()" ng-disabled="!canSave()">Save</button>
   <textarea ui-codemirror
             ui-codemirror-opts="{ mode: 'javascript', lineNumbers: true, viewportMargin: vpMargin, scrollbarStyle: null, onLoad: codeMirrorLoaded }"
             ng-model="file.content"></textarea>
-</form>
+  </form>
+</section>
+

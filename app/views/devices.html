@@ -1,20 +1,49 @@
-<h1 class="page-header">
-  Devices <small>with controls</small>
-</h1>
-<div class="empty-list well" ng-if="deviceIds().length == 0">No devices available for this moment.</div>
-<div id="devices-list" class="multicol-list">
-  <ul class="list-unstyled">
-    <li ng-repeat="devId in deviceIds()">
-      <div class="panel panel-primary device display-cell-bin">
-        <div class="panel-heading">
-          <h3 class="panel-title">{{ dev(devId).name }}</h3>
-        </div>
-        <div class="panel-body">
-          <div ng-repeat="cellId in dev(devId).cellIds">
-            <display-cell cell="cellId"></display-cell>
-          </div>
-        </div>
-      </div>
-    </li>
-  </ul>
+
+<div class="alert alert-danger alert-dismissible" role="alert"
+     ng-hide="$ctrl.haveRights">
+    You cannot view this page. You can change <a ui-sref="accessLevel">access level</a>.
 </div>
+<section ng-if="$ctrl.haveRights">
+    <div class="empty-list well" ng-if="deviceIds().length == 0">No devices available for this moment.</div>
+
+    <div id="devices-list" class="multicol-list">
+        <ul class="list-unstyled">
+            <li ng-repeat="devId in deviceIds()">
+                <div class="panel panel-primary device display-cell-bin">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">{{ _name = dev(devId).name }}</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div ng-repeat="cellId in dev(devId).cellIds" ng-click="$ctrl.copy(_name,cellId)">
+                            <button title="History" class="display-cell-btn btn bg-color-blueDark txt-color-white show-on-parent-hover"
+                                    ng-click="$ctrl.redirect(cellId)">
+                                <i class="glyphicon glyphicon-stats"></i>
+                            </button>
+                            <display-cell cell="cellId"
+                                          tooltip-popup-delay="500"
+                                          uib-tooltip="click to copy '{{cellId}}'"
+                                          tooltip-class="custom-tooltip"></display-cell>
+                        </div>
+                    </div>
+                    <!--<header>
+                        <h2 class="font-md">{{ _name = dev(devId).name }}</h2>
+                    </header>
+                    <div class="widget-body">
+                        <div class="alert alert-default devices-control" ng-repeat="cellId in dev(devId).cellIds"
+                             ng-click="$ctrl.copy(_name,cellId)">
+                            <button title="History" class="display-cell-btn btn bg-color-blueDark txt-color-white show-on-parent-hover"
+                                    ng-click="$ctrl.redirect(cellId)">
+                                <i class="glyphicon glyphicon-stats"></i>
+                            </button>
+                            <display-cell cell="cellId"
+                                          tooltip-popup-delay="500"
+                                          uib-tooltip="click to copy '{{cellId}}'"
+                                          tooltip-class="custom-tooltip"></display-cell>
+                        </div>
+                    </div>-->
+                </div>
+
+            </li>
+        </ul>
+    </div>
+</section>

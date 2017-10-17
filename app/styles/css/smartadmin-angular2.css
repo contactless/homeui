@@ -1,0 +1,191 @@
+
+html {
+  display: flex;
+  flex-direction: column;
+}
+
+body {
+
+  min-height: 100vh;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+html>body:not(.menu-on-top).desktop-detected{
+  min-height: 100vh !important;
+}
+
+#main {
+  padding-bottom: 0 !important;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+html>body:not(.menu-on-top) #main {
+  min-height: calc( 100vh - 101px);
+  /* 49px header; 52px footer*/
+}
+
+html>body.menu-on-top #main {
+  min-height: calc(100vh - 172px);
+  /* 49px header; 71px nav; 52px footer*/
+}
+
+
+
+app-root, app-main-layout, app-auth-layout, app-locked, #extr-page{
+  min-height: 100vh;
+}
+
+
+sa-outlook,
+sa-maps,
+app-root,
+app-main-layout,
+app-auth-layout,
+app-locked,
+#inbox-content,
+#extr-page,
+#content,
+.sa-fx-col,
+sa-widgets-grid>#widgets-grid,
+sa-widget.sa-fx-col>.jarviswidget
+{
+
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+#inbox-content{
+  position: relative;
+}
+
+html>body #inbox-content {
+  position: relative;
+}
+
+html>body:not(.menu-on-top) #inbox-content .sa-outlook-content {
+  min-height: calc( 100vh - (49px + 40px + 70px + 52px));
+  /* 49px header; 40px ribbon; 70px outlook header; 52px footer*/
+}
+
+html>body.menu-on-top #inbox-content .sa-outlook-content {
+  min-height: calc(100vh - (49px + 71px + 40px + 70px + 52px));
+  /* 49px header; 71px nav; 40px ribbon; 70px outlook header; 52px footer*/
+}
+
+
+
+sa-ribbon{
+  display: block;
+}
+
+.page-footer {
+  position: relative;
+}
+
+
+a:hover{cursor: pointer;}
+
+
+#shortcut {
+  display: block;
+  overflow: hidden;
+}
+
+
+#map-canvas{
+  min-height: 300px
+}
+
+.parent_li .sa-icon{
+  margin-left: 1rem;
+}
+
+
+.tab-container>.nav.nav-tabs{
+  display: none;
+}
+
+.inbox-body{
+  flex: 1;
+}
+
+
+
+
+.colorpicker.colorpicker-hidden {
+  display: none;
+}
+.colorpicker.colorpicker-visible {
+  display: block;
+}
+.colorpicker-inline.colorpicker-visible {
+  display: inline-block;
+}
+
+
+.ng-valid[required] {
+  /*border-left: 5px solid #42A948; !* green *!*/
+}
+
+.ng-invalid {
+  /*border-left: 5px solid #a94442; !* red *!*/
+}
+
+
+.tabbed-widget-content{
+  position: relative;
+
+}
+
+
+.tabbed-widget-content .nav-tabs.pull-right>li>a{
+  padding: 6px 10px 6px;
+}
+.tabbed-widget-content .nav-tabs.pull-right{
+  position: relative;
+  top: -45px;
+  display: block;
+}
+
+
+
+svg {
+  touch-action: none;
+}
+
+
+#calendar .fc-right, #calendar .fc-center{
+  display: none;
+}
+
+
+#sparks li h5 {
+  margin-top: -1px;
+}
+
+.select2-container-multi .select2-choices, .select2-selection--multiple{
+  border-color: transparent;
+}
+
+
+.ui-dialog .ui-dialog-titlebar-close .ui-icon-closethick {
+  display: none;
+}
+
+
+.sa-hidden{
+  opacity: 0;
+}
+.sa-cloak.sa-hidden{
+  opacity: 0;
+  transition: opacity .2s;
+}
+.sa-cloak:not(.sa-hidden){
+  opacity: 1;
+}
+

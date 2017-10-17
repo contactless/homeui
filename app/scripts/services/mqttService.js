@@ -53,13 +53,14 @@ function topicMatches() {
 
 //-----------------------------------------------------------------------------
 function mqttClient($window, $rootScope, $timeout, topicMatches,mqttConnectTimeout, 
-                    mqttReconnectDelay, mqttDigestInterval) {
+                    mqttReconnectDelay, mqttDigestInterval, errors) {
   'ngInject';
   var globalPrefix = '',
       service = {},
       client = {},
       id = '',
       connected = false,
+      showConnectError = false,
       connectOptions,
       reconnectTimeout = null,
       callbackMap = Object.create(null),
@@ -120,6 +121,8 @@ function mqttClient($window, $rootScope, $timeout, topicMatches,mqttConnectTimeo
 
   //...........................................................................
   service.onConnect = function() {
+    // если была показана ошибка соединения то очищаю
+    if(showConnectError) errors.hideError();
     if (connected) {
       return;
     }
@@ -140,10 +143,13 @@ function mqttClient($window, $rootScope, $timeout, topicMatches,mqttConnectTimeo
   //...........................................................................
   service.onFailure = function(context) {
     connected = false;
-
-    console.log("Failure to connect to " + client.host + ":" + client.port +
-                 " as " + client.clientId + ". error code " + context.errorCode +
-                 ", error message \"" + context.errorMessage + "\""     );
+    // ставлю флаг что ошибка показана чтобы позже при коннекте
+    // почистить именно ее а не другую ошику
+    showConnectError = true;
+    var m = "Failure to connect to " + client.host + ":" + client.port +
+        " as " + client.clientId + ". error code " + context.errorCode +
+        ", error message \"" + context.errorMessage + "\"";
+    errors.showError(m);
     reconnectAfterTimeout();
   };
 
@@ -160,7 +166,6 @@ function mqttClient($window, $rootScope, $timeout, topicMatches,mqttConnectTimeo
 
   //...........................................................................
   service.subscribe = function (topic, callback) {
-    console.log("SUBSCRIBE: " + topic);
     if (!connected) {
       // FIXME: should fail hard here
       console.error("can't subscribe(): disconnected");
@@ -229,6 +234,8 @@ function mqttClient($window, $rootScope, $timeout, topicMatches,mqttConnectTimeo
 
   //...........................................................................
   service.send = function(destination, payload, retained, qos) {
+    //console.log("service.send",destination, payload, retained, qos);
+
     if (!connected) {
       // FIXME: should fail hard here
       console.error("can't send(): disconnected");

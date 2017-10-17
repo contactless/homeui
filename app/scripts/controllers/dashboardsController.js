@@ -1,7 +1,8 @@
 class DashboardsCtrl {
-  constructor(uiConfig) {
+  constructor(uiConfig,rolesFactory) {
     'ngInject';
-
+    
+    this.roles = rolesFactory;
     this.uiConfig = uiConfig;
     this.data = uiConfig.data;
     // FIXME: make better use of the model
@@ -13,10 +14,18 @@ class DashboardsCtrl {
     this.uiConfig.addDashboard();
   }
 
+  addDashboardWithSvg() {
+    this.uiConfig.addDashboardWithSvg();
+  }
+
+  deleteDashboard(dashbrd) {
+  this.data.dashboards = this.data.dashboards
+      .filter(dashboard => !(dashboard.name === dashbrd.name && dashboard.id === dashbrd.id));
+  };
+
 //.............................................................................
   checkNonEmpty(value, msg) {
-    if (!/\S/.test(value))
-      return msg;
+    if (!/\S/.test(value)) return msg;
     return true;
   };
 
