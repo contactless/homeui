@@ -120,6 +120,8 @@ function mqttRpc($q, $rootScope, $timeout, mqttClient, mqttRpcTimeout, Spinner) 
         }
         var callId = nextId++;
         var topic = this._prefix + method + "/" + mqttClient.getID();
+        if (params)
+          params['request_timeout'] = mqttRpcTimeout / 1000;
         mqttClient.send(
           topic,
           JSON.stringify({
@@ -127,20 +129,21 @@ function mqttRpc($q, $rootScope, $timeout, mqttClient, mqttRpcTimeout, Spinner) 
             params: params || {}
           }),
           false);
-        var timeout = $timeout(invokeResponseHandler.bind(null, callId, null, {
-          error: timeoutError
-        }), mqttRpcTimeout);
-
         Spinner.start(this._spinnerIdPrefix, callId);
         inflight[callId] = (actualTopic, reply) => {
           Spinner.stop(this._spinnerIdPrefix, callId);
-          $timeout.cancel(timeout);
-          if (actualTopic !== null && actualTopic != topic + "/reply")
+          if (actualTopic !== null && actualTopic != topic + "/reply") {
             reject("unexpected response topic " + actualTopic);
-          else if (reply.hasOwnProperty("error") && reply.error !== null)
-            reject(reply.error);
-          else
+          } else if (reply.hasOwnProperty("error") && reply.error !== null) {
+            // Проверяем таймаут
+            if (reply.error.code === -32100) {
+              reject(timeoutError);
+            } else {
+              reject(reply.error);
+            }
+          } else {
             resolve(reply.result);
+          }
         };
       });
     }

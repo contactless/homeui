@@ -79,8 +79,8 @@ class HistoryCtrl {
         // если массив пустой то создаю первый элемент
         this.topics = this.topics.length? this.topics : [null];
         this.selectedTopics = this.topics;
-
         this.ready = false;
+        this.isRequestTimeout = false;
         this.loadPending = !!this.topics.length;
         this.originalUrl = this.getUrl();
         // 4. Setup
@@ -179,7 +179,11 @@ class HistoryCtrl {
         var url = this.getUrl();
         // изза остановки и возможного возобновления загрузки графика ввожу доп проверку
         // изменился ли урл или нет
-        if(this.originalUrl === url || location.href.indexOf(url)>=0) {
+        if(this.originalUrl === url || location.href.indexOf(url)>=0 || this.isRequestTimeout) {
+          if (this.isRequestTimeout) {
+            this.isRequestTimeout = false;
+            this.errors.hideError();
+          }
             this.$state.reload();
         } else {
             this.location.path(url);
@@ -263,7 +267,7 @@ class HistoryCtrl {
             e.setMinutes(this.selectedEndDateMinute.getMinutes());
             e.setHours(this.selectedEndDateMinute.getHours());
         }
-        
+
         // сравниваю и разницу дат и то чтобы старт не был в будущем
         return this.handleData.diffDatesInMinutes(s, new Date()) > 0 && this.handleData.diffDatesInMinutes(s, e) > 0
     }
@@ -286,7 +290,7 @@ class HistoryCtrl {
         _s.setHours(s.getHours());
         _s.setMinutes(s.getMinutes());
         this.selectedStartDateMinute = _s;
-        
+
         var e = end || new Date();
         var _e = new Date();
         _e.setHours(e.getHours());
@@ -421,7 +425,7 @@ class HistoryCtrl {
             if(indexOfChunk === chunks.length - 2) {
                 this.$timeout( () => {this.progreses[indexOfControl].isLoaded = true}, 500)
             }
-            
+
             this.pend = false;
             // проверить есть ли строковые значения
             // проверяю только если еще не нашел строки
@@ -494,7 +498,7 @@ class HistoryCtrl {
                 this.hasPoints = this.chartConfig[indexOfControl].y.some(y => {
                   return  !!y || y == 0
                 } )
-                
+
             } else {
                 this.dataPointsArr = [];
                 this.chartConfig.forEach((ctrl,i) => {
@@ -511,7 +515,12 @@ class HistoryCtrl {
             } else if(indexOfControl < this.selectedTopics.length){
                  this.beforeLoadChunkedHistory(indexOfControl + 1);
             }
-        }).catch(this.errors.catch("Error getting history"));
+        }).catch((reason) => {
+            if (angular.isObject(reason) && reason['data'] === 'MqttTimeoutError') {
+                this.isRequestTimeout = true;
+            }
+            this.errors.catch("Error getting history")(reason);
+        });
     } // loadHistory
 
 } // class HistoryCtrl
