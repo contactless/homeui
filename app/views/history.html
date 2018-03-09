@@ -103,7 +103,7 @@
     </div>
 
     <button class="btn btn-success"
-            ng-disabled="!$ctrl.timeChanged || !$ctrl.selectedTopics[0]"
+            ng-disabled="!($ctrl.timeChanged || $ctrl.isRequestTimeout) || !$ctrl.selectedTopics[0]"
             ng-click="$ctrl.updateDateRange()">
         Load data
     </button>

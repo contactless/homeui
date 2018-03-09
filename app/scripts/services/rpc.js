@@ -3,12 +3,12 @@ import mqttServiceModule from './mqttService';
 //-----------------------------------------------------------------------------
 const mqttRpcServiceModule = angular
   .module('homeuiApp.MqttRpc', [mqttServiceModule])
-  .value("mqttRpcTimeout", 60000)
+  .value("defaultMqttRpcTimeout", 30000)
   .factory("MqttRpc", mqttRpc)
   .name;
 
 //-----------------------------------------------------------------------------
-function mqttRpc($q, $rootScope, $timeout, mqttClient, mqttRpcTimeout, Spinner) {
+function mqttRpc($q, $rootScope, $timeout, mqttClient, defaultMqttRpcTimeout, Spinner, uiConfig) {
   'ngInject';
 
   var disconnectedError = {
@@ -18,13 +18,23 @@ function mqttRpc($q, $rootScope, $timeout, mqttClient, mqttRpcTimeout, Spinner) 
 
   var timeoutError = {
     data: "MqttTimeoutError",
-    message: "MQTT RPC request timed out"
+    message: "Problem with access to the backend. Check your Internet connection or try again later."
+  };
+
+  var packetTimeoutError = {
+    data: "MqttPacketTimeoutError",
+    message: "MQTT request timeout. You can increase the time in the timeout in the settings and try again."
   };
 
   var nextId = 1,
       inflight = {},
       watchStopper = null,
-      subs = Object.create(null);
+      subs = Object.create(null),
+      mqttRpcTimeout = defaultMqttRpcTimeout;
+
+  uiConfig.whenReady()
+      .then(data => mqttRpcTimeout = parseInt(data.settings.mqttTimeout))
+      .catch(new Error('Error loading WebUI config'));
 
 //.............................................................................
   function invokeResponseHandler (id, topic, reply) {
@@ -120,6 +130,8 @@ function mqttRpc($q, $rootScope, $timeout, mqttClient, mqttRpcTimeout, Spinner) 
         }
         var callId = nextId++;
         var topic = this._prefix + method + "/" + mqttClient.getID();
+        if (params)
+          params['request_timeout'] = mqttRpcTimeout / 1000;
         mqttClient.send(
           topic,
           JSON.stringify({
@@ -129,18 +141,24 @@ function mqttRpc($q, $rootScope, $timeout, mqttClient, mqttRpcTimeout, Spinner) 
           false);
         var timeout = $timeout(invokeResponseHandler.bind(null, callId, null, {
           error: timeoutError
-        }), mqttRpcTimeout);
+        }), mqttRpcTimeout + 5000);
 
         Spinner.start(this._spinnerIdPrefix, callId);
         inflight[callId] = (actualTopic, reply) => {
           Spinner.stop(this._spinnerIdPrefix, callId);
           $timeout.cancel(timeout);
-          if (actualTopic !== null && actualTopic != topic + "/reply")
-            reject("unexpected response topic " + actualTopic);
-          else if (reply.hasOwnProperty("error") && reply.error !== null)
-            reject(reply.error);
-          else
+          if (actualTopic !== null && actualTopic != topic + "/reply") {
+              reject("unexpected response topic " + actualTopic);
+          } else if (reply.hasOwnProperty("error") && reply.error !== null) {
+              // Проверяем таймаут
+              if (reply.error.code === -32100) {
+                  reject(packetTimeoutError);
+              } else {
+                  reject(reply.error);
+              }
+          } else {
             resolve(reply.result);
+          }
         };
       });
     }

@@ -10,7 +10,8 @@ function uiConfigService($rootScope, $q, $timeout) {
   var data = {
     dashboards: [DEFAULT_DASHBOARD],
     widgets: [],
-    defaultDashboardId: 'default'
+    defaultDashboardId: 'default',
+    settings: {}
   };
   var deferReady = $q.defer(),
       version = 1;
@@ -142,7 +143,8 @@ function uiConfigService($rootScope, $q, $timeout) {
     return {
       dashboards: filterCollection(data.dashboards),
       widgets: filterCollection(data.widgets),
-      defaultDashboardId: data.defaultDashboardId
+      defaultDashboardId: data.defaultDashboardId,
+      settings: data.settings
     };
   }
 
@@ -152,6 +154,10 @@ function uiConfigService($rootScope, $q, $timeout) {
     } else {
       throw new Error("invalid dashboard id: " + id);
     }
+  }
+
+  function updateSettings(settings) {
+      data.settings = settings;
   }
 
   $rootScope.$watch(filtered, () => { version++; }, true);
@@ -208,7 +214,8 @@ function uiConfigService($rootScope, $q, $timeout) {
     }),
 
     filtered,
-    setDefaultDashboard
+    setDefaultDashboard,
+    updateSettings
   };
 }
 
