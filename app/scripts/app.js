@@ -86,6 +86,7 @@ import routingModule from './app.routes';
 
 // Internal components
 import LoginFormModule from './components/loginForm/index';
+import WebUIModule from './components/webUI/index';
 import SvgEditorModule from './components/svgEditor/index';
 
 //-----------------------------------------------------------------------------
@@ -117,6 +118,7 @@ const module = angular
         metaTypeFilterModule,
         dumbTemplateModule,
         LoginFormModule,
+        WebUIModule,
         SvgEditorModule,
 
         ///'toggle-switch',
@@ -302,6 +304,7 @@ const realApp = angular.module('realHomeuiApp', [module.name, mqttServiceModule,
             urlTemplate: '/scripts/i18n/{part}/{lang}.json'
         });
         $translateProvider.preferredLanguage('ru');
+        $translateProvider.usePostCompiling(true);
     }])
     .config(['$compileProvider', function ($compileProvider) {
         $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|tel|file|blob):/);

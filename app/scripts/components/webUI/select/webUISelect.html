@@ -1,0 +1,8 @@
+<div ng-if="$ctrl.isMultiple" class="web-ui-select">
+    <ui-select ng-model="$ctrl.current" tagging="$ctrl.tagHandler" theme="bootstrap" title="{{'webUI.select.tip.account' | translate}}" append-to-body="false" search-enabled="false">
+        <ui-select-match placeholder="">{{ $select.selected.name }}</ui-select-match>
+        <ui-select-choices repeat="account in $ctrl.items() | filter: { name: $select.search }">
+            <div ng-bind-html="account.name"></div>
+        </ui-select-choices>
+    </ui-select>
+</div>

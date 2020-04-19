@@ -1,0 +1,150 @@
+web-ui-manage {
+    .form-group {
+        .required {
+            .control-label {
+                &:after {
+                    content: "*";
+                    color: red;
+                    padding-left: 3px;
+                }
+            }
+        }
+    }
+
+    .tap {
+        cursor: pointer;
+    }
+
+    table {
+        tr:first-child {
+            td {
+                border-top: none;
+            }
+        }
+    }
+}
+
+.visible-xs {
+    web-ui-select {
+        width: 100%;
+        margin: 10px 0px 5px 0px;
+        
+        .open {
+            > .dropdown-menu {
+                animation: none;
+            }
+        }    
+        
+        .ui-select-container {
+            .ui-select-choices {
+                .ui-select-choices-row {
+                    > span {
+                        background: rgba(69, 69, 69, .6);
+                        color:#999;
+                        padding: 10px 15px 10px 38px;
+                        font-size: 14px;
+                    }
+                }
+            } 
+
+            .ui-select-match-text {
+                display: inline-block;
+                font-size: 14px;
+                font-weight: 400;
+                padding-bottom: 10px;
+            }
+
+            .ui-select-choices {
+                position: relative !important;
+                top: 10px;
+                left: 0;
+                right: 0;
+                margin-bottom: 10px;
+                overflow: hidden;
+            }
+        }
+    }
+}
+
+web-ui-select {
+    display: inline-block;
+    vertical-align: middle;
+
+    .ui-select-container {
+        position: relative;
+
+        .ui-select-match {
+
+            &.btn-default-focus {
+                background: none;
+                border: none;
+                color: #fff;
+                box-shadow: none;
+            }
+
+            .ui-select-toggle {
+                background: transparent;
+                border: none;
+                color: #fff;
+        
+                &:hover,
+                &:focus {
+                    background: transparent;
+                    border: none;
+                }
+            }
+        }
+
+        .ui-select-choices {
+            position: absolute;
+            z-index: 100;
+            top: 35px;
+            left: inherit;
+            right: -22px;
+            float: none;
+
+            &.dropdown-menu {
+                background: #222;
+                border: 1px solid #222;
+                box-shadow: none;
+                padding: 0;
+            }
+
+           .ui-select-choices-row {
+                > span {
+                    background: #222;
+                    color: #fff;
+
+                    &:hover {
+                        color: rgba($color: #fff, $alpha: 0.7);
+                    }
+                }
+
+                &.active {
+                    > span {
+                        background: #fff;
+                        color: #222;
+                    }
+                }
+            }
+        }
+
+        .form-control {
+            background: none;
+            border: none;
+            color: #fff;
+
+            height: 19px;
+            padding: 0px 12px;
+        }
+
+        .ui-select-search {
+            width: 1px;
+
+            &.ui-select-search-hidden {
+                display: none;
+            }
+        }
+    }
+
+}

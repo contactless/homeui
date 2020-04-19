@@ -1,0 +1,62 @@
+{
+    "webUI": {
+        "select": {
+            "tip": {
+                "account": "Choose a account"
+            },
+            "button": {
+                "add": "+ Add account"
+            }
+        },
+        "manager": {
+            "field": {
+                "name": "Name",
+                "host": "Host",
+                "port": "Port",
+                "user": "User ID",
+                "password": "Password",
+                "prefix-header": "Use prefix",
+                "prefix": "Enable prefix (/client/user_id/)",
+                "credentials": "Use access credentials"
+            },
+            "table": {
+                "header": {
+                    "name": "Name",
+                    "host": "Host",
+                    "port": "Port",
+                    "user": "User ID",
+                    "prefix": "Use prefix"
+                }
+            },
+            "button": {
+                "add": "Add account",
+                "edit": "Edit",
+                "remove": "Remove",
+                "login": "Login",
+                "save": "Save",
+                "cancel": "Cancel"
+            },
+            "prompt": {
+                "remove": "Are you sure you want to delete <b>{{name}}</b> account?"
+            },
+            "error": {
+                "name": {
+                    "empty": "Empty name is not allowed"
+                },
+                "host": {
+                    "empty": "Empty host is not allowed"
+                },
+                "port": {
+                    "empty": "Empty port is not allowed",
+                    "invalid": "Only number allowed"
+                },
+                "user": {
+                    "empty": "Empty user is not allowed"
+                },
+                "password": {
+                    "empty": "Empty password is not allowed"
+                }
+            }
+        }
+    }
+}

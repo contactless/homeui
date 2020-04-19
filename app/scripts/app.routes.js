@@ -1,3 +1,5 @@
+'use strict';
+
 import uiRouter from 'angular-ui-router';
 
 import homeTemplateUrl from 'ngtemplate-loader?relativeTo=/app!../views/home.html';
@@ -44,6 +46,11 @@ function routing($stateProvider,  $locationProvider, $urlRouterProvider) {
           url: '/web-ui',
           templateUrl: webUITemplateUrl,
           controller: 'WebUICtrl as $ctrl'
+      })
+      .state('webUIAdd', {
+        url: '/web-ui/add',
+        templateUrl: webUITemplateUrl,
+        controller: 'WebUICtrl as $ctrl'
       })
       .state('system', {
           url: '/system',

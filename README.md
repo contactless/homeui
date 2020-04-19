@@ -31,3 +31,21 @@ Run `grunt` for building and `grunt serve` for preview.
 ## Testing
 
 Running `grunt test` will run the unit tests with karma.
+
+# Documentation
+
+## Multipe WebUI
+
+Change value in .env file
+
+**Multiple account disabled:**
+
+```
+WEBUI_MULTIPLE=false
+```
+
+**Multipe account enabled:**
+
+```
+WEBUI_MULTIPLE=true
+```

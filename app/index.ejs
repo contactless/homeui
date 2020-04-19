@@ -48,6 +48,7 @@
                   </span>
                   <span class="connected-status" ng-class="(isConnected()) ? 'label label-success' : 'label label-danger'"
                         ng-bind="isConnected() ? 'Connected' : 'Disconnected'"></span>
+                  <web-ui-select class="hidden-xs"></web-ui-select>       
               </p>
           </div>
 
@@ -56,6 +57,9 @@
           <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
           <div class="collapse navbar-collapse navbar-ex1-collapse">
               <ul class="nav navbar-nav side-nav">
+                  <li class="visible-xs">
+                        <web-ui-select></web-ui-select>       
+                  </li>
                   <li ui-sref-active="active">
                       <a data-toggle="collapse" data-target=".navbar-ex1-collapse" ui-sref="home"><i class="glyphicon glyphicon-cog"></i> Home</a>
                   </li>

@@ -13,9 +13,15 @@ const WebpackChunkHash = require("webpack-chunk-hash");
 const InlineManifestWebpackPlugin = require("inline-manifest-webpack-plugin");
 const InlineChunksManifestPlugin = require('./inline-chunks-manifest');
 
+const dotenv = require('dotenv').config({
+    path: __dirname + '/.env'
+});
+const DotenvPlugin = require('webpack-dotenv-plugin');
+
 const path = require('path');
 
 process.traceDeprecation = true;
+process.noDeprecation = true;
 
 /**
  * Env
@@ -70,8 +76,8 @@ module.exports = function makeWebpackConfig() {
 
             'angular-translate',
             'angular-translate-loader-partial',
+            'ngbootbox',
             'angular-spinkit',
-            'ngbootbox'
         ]
     };
     /**
@@ -243,6 +249,18 @@ module.exports = function makeWebpackConfig() {
      * List: http://webpack.github.io/docs/list-of-plugins.html
      */
     config.plugins = [
+
+    /**
+     * Dotenv
+     * Reference: https://github.com/nwinch/webpack-dotenv-plugin
+     * Add dotenv support
+     */
+        new DotenvPlugin({
+            path: '.env',
+            sample: '.env.example',
+            allowEmptyValues: true,
+        }),
+
     /**
      * Angular annotate
      * Reference: https://github.com/jeffling/ng-annotate-webpack-plugin
@@ -355,6 +373,7 @@ module.exports = function makeWebpackConfig() {
             // Reference: https://github.com/kevlened/copy-webpack-plugin
             new CopyWebpackPlugin([
                 {from: path.join(__dirname, 'app', 'images'), to: 'images'},
+                {from: path.join(__dirname, 'app', 'scripts/i18n'), to: 'scripts/i18n'},
                 {from: path.join(__dirname, 'app', '404.html'), to: '404.html'},
                 {from: path.join(__dirname, 'app', 'favicon.ico'), to: 'favicon.ico'},
                 {from: path.join(__dirname, 'app', 'robots.txt'), to: 'robots.txt'}
