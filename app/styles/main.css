@@ -530,7 +530,39 @@ button.show-console span {
 .display-cell {
     width: 100%;
     position: relative;
-    padding-right: 35px;
+    padding-right: 30px;
+}
+
+.display-cell.cell-group {
+  margin-left: -13px;
+  margin-right: -13px;
+}
+
+.display-cell.cell-group:after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.display-cell.cell-group .cell-item {
+  position: relative;
+  float: left;
+  width: 50%;
+  padding-left: 13px;
+}
+
+.display-cell.cell-group.cell-group-single .cell-item  {
+  width: 100%;
+}
+
+.display-cell.cell-group .cell-button {
+  padding-left: 13px;
+  margin-left: 13px;
+  display: block;
+}
+
+.display-cell.cell-group .cell-button .cell-item {
+  padding-left: 0;
 }
 
 .display-cell-btn,
@@ -561,12 +593,29 @@ button.show-console span {
   flex-grow: 1;
 }
 
+.display-cell-bin .display-cell:not(:last-child) {
+  margin-bottom: 10px;
+}
+
+.display-cell-bin .display-cell h4 {
+  font-size: 16px;
+}
+
 .display-cell .cell-range .value-wrapper {
   display: block;
   text-align: center;
   border-bottom: 1px dotted #ccc;
-  width: 80%;
-  margin: 0 auto 4px auto;
+  _width: 80%;
+  _margin: 0 auto 4px auto;
+}
+
+.display-cell .cell-range .value-wrapper.field {
+    border-bottom: none;
+}
+
+.display-cell .cell-range .value-wrapper.field input {
+    display: inline-block;
+    margin-top: 8px;
 }
 
 .display-cell  button.cell-button {
@@ -576,12 +625,50 @@ button.show-console span {
 .display-cell  button.cell-button h4 {
   font-size: 13px;
 }
+
 .display-cell input.cell-text {
-  width: 120px;
+  _width: 120px;
 }
 
 .display-cell .cell-value input {
-  width: 120px;
+  _width: 120px;
+}
+
+.display-cell .cell-text {
+  margin-bottom: 0;
+  font-size: 14px;
+}
+
+.display-cell .cell-value .int {
+  width: auto;
+}
+
+.display-cell .cell-switch .onoffswitch {
+  margin-left: 0;
+}
+
+.display-cell .cell-range .ngrs-range-slider {
+  padding: 4px 0px;
+  position: relative;
+}
+
+.display-cell .cell-range .ngrs-range-slider:after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  left: 0;
+  right: 0;
+  background-color: #cacaca;
+}
+
+.display-cell .cell-range .ngrs-range-slider .ngrs-runner {
+  background: none;
+}
+
+.display-cell .cell-range .ngrs-range-slider .ngrs-join {
+  margin-left: -9px;
 }
 
 .cell-error {

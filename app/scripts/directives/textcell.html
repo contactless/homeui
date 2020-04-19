@@ -6,7 +6,7 @@
     'outsideClick': 'mouseleave',
     'focus': 'mouseleave'
   }"
-  tooltip-enable="{{ cell.readOnly }}"
+  class="cell-item"
 >
   <p
     ng-if="cell.readOnly"
@@ -18,7 +18,7 @@
     ng-hide="cell.readOnly"
     ng-model="cell.value"
     type="text"
-    class="cell cell-text"
+    class="cell cell-text form-control"
     explicit-changes
   >
 </div>

@@ -9,7 +9,7 @@ function cellNameDirective() {
     replace: true,
     // XXX: trying to use templateUrl causes 'controller cell not
     // found' error
-    template: '<h4 class="cell-title">' +
+    template: '<h4 class="cell-item cell-title">' +
       '<span class="name">{{ name() }}</span>' +
       '<span ng-if="displayId()" class="id" title="device/control id">{{ cellId() }}</span>' +
       '</h4>',

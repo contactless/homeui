@@ -7,12 +7,12 @@
   <toggle-switch ng-switch-default class="control-value" ng-model="cell.value"></toggle-cell>
 </span>
   для смартадмин-->
-<span class="cell cell-switch">
-    <span class="onoffswitch" ng-class="{'pointer-none text-muted':cell.readOnly==true}">
-        <input type="checkbox" ng-model="_value" class="onoffswitch-checkbox" id="{{id}}">
+<span class="cell-item cell cell-switch">
+  <span class="onoffswitch" ng-class="{'pointer-none text-muted':cell.readOnly==true}">
+      <input type="checkbox" ng-model="_value" class="onoffswitch-checkbox" id="{{id}}">
         <label class="onoffswitch-label" for="{{id}}" ng-click="change()">
-            <span class="onoffswitch-inner" data-swchon-text="ON" data-swchoff-text="OFF"></span>
-            <span class="onoffswitch-switch"></span>
-        </label>
-    </span>
+          <span class="onoffswitch-inner" data-swchon-text="ON" data-swchoff-text="OFF"></span>
+          <span class="onoffswitch-switch"></span>
+      </label>
+  </span>
 </span>

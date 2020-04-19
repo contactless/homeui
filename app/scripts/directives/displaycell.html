@@ -1,21 +1,24 @@
-<div class="display-cell display-cell-{{cell.displayType}} cell-type-{{ cell.type }}"
-     ng-switch on="cell.displayType"
-     ng-class="{ 'cell-error': cell.error }"
-     data-cell-id="{{ cell.id }}">
-    <cell-name ng-if="displayCellCtrl.shouldDisplayCellName()"
-               override="displayCellCtrl.overrideName()"
-               ng-click="displayCellCtrl.copy(cell.id)"
-               tooltip-popup-close-delay="500"
-               uib-tooltip="'{{ cell.id }}' copied to clipboard"
-               tooltip-trigger="{
-                 'outsideClick': 'mouseleave',
-                 'focus': 'mouseleave'
-               }"
-               tooltip-class="custom-tooltip cell-name-tooltip"></cell-name>
-    <button title="History" type="button" class="display-cell-btn btn bg-color-blueDark txt-color-white show-on-parent-hover"
-            ng-click="displayCellCtrl.redirect(cell.id)">
-      <i class="glyphicon glyphicon-stats"></i>
+<div 
+    class="cell-group display-cell display-cell-{{cell.displayType}} cell-type-{{ cell.type }}" 
+    ng-switch on="cell.displayType"
+    ng-class="{ 'cell-error': cell.error, 'cell-group-single': ctrl.source.compact }" 
+    data-cell-id="{{ cell.id }}">
+    <cell-name 
+        ng-if="displayCellCtrl.shouldDisplayCellName()" 
+        override="displayCellCtrl.overrideName()"
+        ng-click="displayCellCtrl.copy(cell.id)" 
+        tooltip-popup-close-delay="500"
+        uib-tooltip="'{{ cell.id }}' copied to clipboard" 
+        tooltip-trigger="{
+            'outsideClick': 'mouseleave',
+            'focus': 'mouseleave'
+        }" 
+        tooltip-class="custom-tooltip cell-name-tooltip"></cell-name>
+    <button 
+        type="button"
+        title="History" 
+        class="display-cell-btn btn bg-color-blueDark txt-color-white show-on-parent-hover" 
+        ng-click="displayCellCtrl.redirect(cell.id)">
+        <i class="glyphicon glyphicon-stats"></i>
     </button>
 </div>
-<!--uib-tooltip="{{parentName}}/{{cell.id}}"
-     tooltip-class="custom-tooltip"-->
