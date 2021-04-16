@@ -918,3 +918,79 @@ table.table-bordered {
 ul.col-md-2.nav.nav-pills.nav-stacked {
     margin-bottom: 9px;
 }
+
+@media (max-width: 767px) {
+  .logs-load-button {
+    margin-left: 10px;
+  }
+}
+
+@media (max-width: 990px) {
+  .logs-datetime-label {
+    margin-top: 10px;
+  }
+
+  .logs-timepicker {
+    margin-top: -34px;
+  }
+}
+
+@media (min-width: 991px) {
+  .logs-parameter-label {
+    text-align: right;
+    margin-top: 7px;
+  }
+
+  .logs-datetime-label {
+    text-align: right;
+    margin-top: 30px;
+  }
+
+  .logs-date-picker {
+    margin-top: 23px;
+  }
+
+  .logs-timepicker {
+    margin-top: -27px;
+  }
+
+  .logs-radio-item {
+    margin-top: 7px;
+  }
+
+  .logs-time {
+    white-space: nowrap;
+  }
+}
+
+@media (min-width: 1200px) {
+  .logs-time-column {
+    white-space: nowrap;
+  }
+}
+
+.logs-load-button {
+  margin-top: -27px;
+}
+
+.logs-time-column {
+  color: GrayText;
+}
+
+.logs-service {
+  white-space: nowrap;
+}
+
+.logs-message-column {
+  white-space: pre-wrap;
+  padding-left: 5px;
+}
+
+.logs-view {
+  height: 500px;
+  width: 100%;
+}
+
+.logs-page .ui-select-container{
+  margin-bottom: 5px;
+}

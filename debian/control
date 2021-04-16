@@ -9,5 +9,6 @@ Package: wb-mqtt-homeui
 Architecture: all
 Conflicts: wb-homa-webinterface
 Depends: ${shlibs:Depends}, ${misc:Depends}, mosquitto, mqtt-wss, mqtt-tools, nginx-extras, wb-utils (>= 2.0)
+Recommends: wb-mqtt-logs
 Breaks: wb-mqtt-confed (<< 1.0.3), wb-mqtt-db (<< 1.5)
 Description: Wiren Board Web UI web interface

@@ -18,7 +18,6 @@
                 <th>File</th>
                 <th>Title</th>
                 <th>Description</th>
-                <th>Updated at</th>
             </tr>
             </thead>
             <tbody>
@@ -30,11 +29,8 @@
                     </a>
                 </td>
                 <td>
-                    <a ui-sref="configEdit({path: config.schemaPath})">
-                        {{ config.description }}
-                    </a>
+                    {{ config.description }}
                 </td>
-                <td>{{ config.updatedAt }}</td>
             </tr>
             </tbody>
         </table>

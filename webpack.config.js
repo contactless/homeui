@@ -70,7 +70,8 @@ module.exports = function makeWebpackConfig() {
             'angular-translate',
             'angular-translate-loader-partial',
             'angular-spinkit',
-            'ngbootbox'
+            'ngbootbox',
+            'angular-ui-scroll'
         ]
     };
     /**

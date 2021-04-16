@@ -34,6 +34,7 @@
     "angular-translate": "^2.18.1",
     "angular-translate-loader-partial": "^2.18.1",
     "angular-ui-router": "^0.4.2",
+    "angular-ui-scroll": "^1.8.2",
     "angular-xeditable": "^0.7.0",
     "bootbox": "^4.4.0",
     "bootstrap": "^3.3.7",

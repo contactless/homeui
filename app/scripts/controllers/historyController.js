@@ -74,6 +74,11 @@ class HistoryCtrl {
             }
         };
 
+        this.options = {
+            displayModeBar: true,
+            displaylogo: false
+        }
+
         // ищу в урле контролы
         if($stateParams.device && $stateParams.control) {
             const parsedDevices = $stateParams.device.split(';');

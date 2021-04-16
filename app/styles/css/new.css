@@ -121,7 +121,7 @@ div[uib-datepicker-popup-wrap] {
     margin-top: 7px;
 }
 
-@media (max-width: 996px){
+@media (max-width: 991px){
     .history-page .progress {
         height: 4px;
         margin-bottom: 1px;

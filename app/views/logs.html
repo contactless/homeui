@@ -1,0 +1,102 @@
+
+<div class="stretch-height logs-page">
+    <h1 class="page-header">
+        Logs
+    </h1>
+
+    <div class="row" ng-cloak ng-show="!$ctrl.waitBootsAndServices">
+        <label class="col-md-1 col-xs-12 logs-parameter-label" for="boot-select">Boot</label>
+        <div class="col-md-11 col-xs-12">
+            <ui-select ng-model="$ctrl.selectedBoot"
+                    theme="bootstrap"
+                    title="Choose a boot"
+                    append-to-body="true">
+                <ui-select-match placeholder="Choose a boot">{{ $select.selected.desc }}</ui-select-match>
+                <ui-select-choices repeat="boot in ($ctrl.boots | filter: {desc: $select.search}) track by boot.hash">
+                    <div ng-bind-html="boot.desc | hilite: $select.search"></div>
+                </ui-select-choices>
+            </ui-select>
+        </div>
+    </div>
+
+    <div class="row" ng-cloak ng-show="!$ctrl.waitBootsAndServices">
+        <label class="col-md-1 col-xs-12 logs-parameter-label" for="service-select">Service</label>
+        <div class="col-md-11 col-xs-12">
+            <ui-select ng-model="$ctrl.selectedService"
+                    theme="bootstrap"
+                    title="Choose a service"
+                    append-to-body="true">
+                <ui-select-match placeholder="Choose a service">{{ $select.selected }}</ui-select-match>
+                <ui-select-choices repeat="service in $ctrl.services | filter: $select.search">
+                    <div ng-bind-html="service | hilite: $select.search"></div>
+                </ui-select-choices>
+            </ui-select>
+        </div>
+    </div>
+
+    <div class="row" ng-cloak ng-show="!$ctrl.waitBootsAndServices">
+        <label class="col-md-1 col-xs-12 logs-parameter-label" for="service-select">Time</label>
+        <label class="col-md-2 col-xs-12 logs-radio-item">
+            <input type="radio" ng-model="$ctrl.requestLatestLogs" ng-value="true"/>
+            Latest logs
+        </label>
+    </div>
+
+    <div class="row" ng-cloak ng-show="!$ctrl.waitBootsAndServices">
+        <div class="col-md-offset-1 col-md-3 col-xs-8 logs-radio-item" style="display: flex;">
+                <input type="radio" style="margin-right: 5px" ng-model="$ctrl.requestLatestLogs" ng-value="false"/>
+                <div class="input-group">
+                    <input id="logs-start"
+                            type="text"
+                            class="form-control"
+                            uib-datepicker-popup="{{format}}"
+                            ng-disabled="$ctrl.requestLatestLogs"
+                            ng-model="$ctrl.startDate"
+                            is-open="$ctrl.popups.start"
+                            close-text="Close"/>
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="$ctrl.popups.start = true">
+                            <i class="glyphicon glyphicon-calendar"></i>
+                        </button>
+                    </span>
+                </div>
+        </div>
+        <div class="col-md-2 col-xs-4">
+            <div uib-timepicker
+                class = "logs-timepicker"
+                ng-disabled="$ctrl.requestLatestLogs"
+                ng-model="$ctrl.selectedStartDateMinute"
+                minute-step="5"
+                hour-step="1"
+                show-meridian="false">
+            </div>
+        </div>
+    </div>
+
+    <div class="row" ng-cloak ng-show="!$ctrl.waitBootsAndServices">
+        <button class="btn btn-success col-xs-3 col-sm-2 col-lg-1 logs-load-button"
+                ng-disabled="adapter.isLoading || !$ctrl.selectedBoot || !$ctrl.selectedService"
+                ng-click="$ctrl.reload()">
+            Load logs
+        </button>
+    </div>
+
+    <div ng-cloak ng-show="!$ctrl.waitBootsAndServices && $ctrl.logs.length" class="logs-view" style="overflow: clip;">
+        <table ui-scroll-viewport class="logs-view">
+            <tr ui-scroll="log in datasource" adapter="adapter">
+                <td class="logs-time-column">
+                    <span class="logs-time">{{log.time}}</span>
+                    <span ng-if="log.service" class="logs-service">[{{log.service}}]</span>
+                </td>
+                <td class="logs-message-column"
+                    ng-style="{color: {0: 'red', 1: 'red', 2:'red', 3:'red', 4:'#997300'}[log.level], 'font-weight': {7: 'bold'}[log.level]}">{{log.msg}}</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="col-xs-12 spinner" ng-show="$ctrl.waitBootsAndServices">
+        <span class="spinner-loader">Loading...</span>
+    </div>
+
+</div>
+

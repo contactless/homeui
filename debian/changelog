@@ -1,3 +1,9 @@
+wb-mqtt-homeui (2.4.0) stable; urgency=medium
+
+  * Logs page
+
+ -- Petr Krasnoshchekov <petr.krasnoshchekov@wirenboard.ru>  Mon, 05 Apr 2021 09:00:00 +0300
+
 wb-mqtt-homeui (2.3.5) stable; urgency=medium
 
   * Dashboards deletion is fixed

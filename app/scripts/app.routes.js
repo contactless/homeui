@@ -17,6 +17,7 @@ import loginTemplateUrl from 'ngtemplate-loader?relativeTo=/app!../views/login.h
 import scriptsTemplateUrl from 'ngtemplate-loader?relativeTo=/app!../views/scripts.html';
 import scriptTemplateUrl from 'ngtemplate-loader?relativeTo=/app!../views/script.html';
 import historyTemplateUrl from 'ngtemplate-loader?relativeTo=/app!../views/history.html';
+import logsTemplateUrl from 'ngtemplate-loader?relativeTo=/app!../views/logs.html';
 import configsTemplateUrl from 'ngtemplate-loader?relativeTo=/app!../views/configs.html';
 import configTemplateUrl from 'ngtemplate-loader?relativeTo=/app!../views/config.html';
 
@@ -425,8 +426,6 @@ function routing($stateProvider,  $locationProvider, $urlRouterProvider) {
               .then(() => {
                 deferred_1.resolve(module_1);
               });
-
-
             }, 
             'history'
           );
@@ -439,9 +438,6 @@ function routing($stateProvider,  $locationProvider, $urlRouterProvider) {
       templateUrl: historyTemplateUrl,
       controller: 'HistoryCtrl as $ctrl',
       resolve: {
-          /*load: ['$ocLazyLoad', function($ocLazyLoad) {
-              return $ocLazyLoad.load(['plotly','historyController'])
-          }],*/
         ctrl: ($q, $ocLazyLoad) => {
             'ngInject';
             let deferred_1 = $q.defer();
@@ -455,8 +451,6 @@ function routing($stateProvider,  $locationProvider, $urlRouterProvider) {
                         .then(() => {
                             deferred_1.resolve(module_1);
                         });
-
-
                 },
                 'history'
             );
@@ -516,7 +510,32 @@ function routing($stateProvider,  $locationProvider, $urlRouterProvider) {
           return deferred.promise;
         }
       }
-    });
+    })
+  //...........................................................................
+    .state('logs', {
+      url: '/logs',
+      controller: 'LogsCtrl as $ctrl',
+      templateUrl: logsTemplateUrl,
+      resolve: {
+        ctrl: ($q, $ocLazyLoad) => {
+          'ngInject';
+          let deferred_1 = $q.defer();
+          require.ensure(
+            [],
+            (require) => {
+              let module_1 = require('./controllers/logsController.js');
+              $ocLazyLoad.load({
+                name: module_1.default.name,
+              })
+              .then(() => {
+                deferred_1.resolve(module_1);
+              });
+            }, 
+            'logs'
+          );
+          return deferred_1.promise
+      }}
+  });
 };
 
 //-----------------------------------------------------------------------------
